@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 120
+
+exclude = venv, itology/migrations/
+import-order-style = google
+application_import_names = itology, itology_app
