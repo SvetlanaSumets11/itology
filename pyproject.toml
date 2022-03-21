@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "itology_app"
+version = "0.1.0"
+description = ""
+authors = ["sumets <svitlana.sumets@nixsolutions.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.0.3"
+environs = "^9.5.0"
+psycopg-binary = "^3.0.10"
+psycopg2-binary = "^2.9.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
