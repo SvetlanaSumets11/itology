@@ -3,9 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from PIL import Image
 
-
-ACCOUNT_TYPE = (('Individual', 'Individual'), ('Company', 'Company'))
-USER_TYPE = (('Customer', 'Customer'), ('Expert', 'Expert'))
+from itology.config import ACCOUNT_TYPE, USER_TYPE
 
 
 class AbstractMixin:
