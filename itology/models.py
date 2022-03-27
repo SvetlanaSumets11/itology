@@ -1,10 +1,9 @@
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from PIL import Image
 
-
-ACCOUNT_TYPE = (('Individual', 'Individual'), ('Company', 'Company'))
-USER_TYPE = (('Customer', 'Customer'), ('Expert', 'Expert'))
+from itology.config import ACCOUNT_TYPE, USER_TYPE, SIZE_IMAGE
 
 
 class AbstractMixin:
@@ -81,9 +80,10 @@ class Comment(models.Model, AbstractMixin):
 
 
 class Client(models.Model, AbstractMixin):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='user', related_name='client')
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, help_text='User account type')
     user_type = models.CharField(max_length=10, choices=USER_TYPE, help_text='User type in the system')
+    avatar = models.ImageField(default='images/default_avatar.png', upload_to='profile_images')
 
     role = models.ManyToManyField('Role', verbose_name='role', related_name='client',
                                   help_text='The role of an expert in a project')
@@ -91,9 +91,19 @@ class Client(models.Model, AbstractMixin):
     def __str__(self):
         return self.user.username
 
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > SIZE_IMAGE or img.width > SIZE_IMAGE:
+            new_img = (SIZE_IMAGE, SIZE_IMAGE)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
+
     class Meta:
         verbose_name = 'Client'
-        verbose_name_plural = 'Client'
+        verbose_name_plural = 'Clients'
         ordering = ['user']
 
 
