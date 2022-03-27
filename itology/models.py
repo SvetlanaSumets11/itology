@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from PIL import Image
 
-from itology.config import ACCOUNT_TYPE, USER_TYPE
+from itology.config import ACCOUNT_TYPE, USER_TYPE, SIZE_IMAGE
 
 
 class AbstractMixin:
@@ -96,8 +96,8 @@ class Client(models.Model, AbstractMixin):
 
         img = Image.open(self.avatar.path)
 
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
+        if img.height > SIZE_IMAGE or img.width > SIZE_IMAGE:
+            new_img = (SIZE_IMAGE, SIZE_IMAGE)
             img.thumbnail(new_img)
             img.save(self.avatar.path)
 
