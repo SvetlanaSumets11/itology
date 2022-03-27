@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from marshmallow import ValidationError
 
 from itology.config import ACCOUNT_TYPE, USER_TYPE
 from itology.models import Client
@@ -15,14 +14,9 @@ def _attrs(placeholder):
     return {'placeholder': placeholder} | FORM_CONTROL
 
 
-def _validate_email(email):
-    if User.objects.filter(email=email).exists():
-        raise ValidationError(f'{email} already exists', params={'email': email})
-
-
 class RegisterForm(UserCreationForm):
     username = forms.CharField(max_length=128, required=True, widget=forms.TextInput(attrs=_attrs('Username')))
-    email = forms.EmailField(required=True, validators=[_validate_email], widget=forms.TextInput(attrs=_attrs('Email')))
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs=_attrs('Email')))
     user_type = forms.CharField(required=True, widget=forms.RadioSelect(choices=USER_TYPE))
     account_type = forms.CharField(required=True, widget=forms.RadioSelect(choices=ACCOUNT_TYPE))
     password1 = forms.CharField(
@@ -67,7 +61,7 @@ class LoginForm(AuthenticationForm):
 
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=128, required=True, widget=forms.TextInput(attrs=FORM_CONTROL))
-    email = forms.EmailField(required=True, validators=[_validate_email], widget=forms.TextInput(attrs=FORM_CONTROL))
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs=FORM_CONTROL))
 
     class Meta:
         model = User
