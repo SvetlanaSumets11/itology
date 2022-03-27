@@ -85,8 +85,8 @@ class Client(models.Model, AbstractMixin):
     user_type = models.CharField(max_length=10, choices=USER_TYPE, help_text='User type in the system')
     avatar = models.ImageField(default='images/default_avatar.png', upload_to='profile_images')
 
-    role = models.ManyToManyField('Role', verbose_name='role', related_name='client',
-                                  help_text='The role of an expert in a project')
+    roles = models.ManyToManyField('Role', verbose_name='roles', related_name='client',
+                                   help_text='The role of an expert in a project')
 
     def __str__(self):
         return self.user.username
@@ -132,8 +132,10 @@ class Advert(models.Model, AbstractMixin):
 
     creator = models.ForeignKey('Client', verbose_name='user', on_delete=models.CASCADE,
                                 related_name='advert', help_text='Advert author')
-    comment = models.ManyToManyField('Comment', verbose_name='comment', related_name='advert',
-                                     help_text='Advert comment')
+    comment = models.ForeignKey('Comment', verbose_name='comment', on_delete=models.CASCADE, related_name='advert',
+                                help_text='Advert comment')
+    subsections = models.ManyToManyField('Subsection', verbose_name='subsections', related_name='advert',
+                                         help_text='Advert sections')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
