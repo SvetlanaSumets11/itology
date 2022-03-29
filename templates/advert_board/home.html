@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+{% extends 'home/base.html' %}
+{% block content %}
+    <div class="jumbotron bg-5 text-center">
+        <h1 class="display-4">Welcome, {{ user.username.title|default:'Guest' }}</h1>
+        <p class="lead">
+            This is <b>user registration and login system</b> build with django which is
+            a Python-based free and open-source web framework that follows the model–template–views architectural
+            pattern.
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
+            {% endif %}
+        </p>
+    </div>
+    <div class="container-fluid bg-2" style="min-height: 80vh">
+        {% for advert in object_list %}
+            <div class="card-body w3-card-2 w3-margin w3-white">
+                <div class="w3-container">
+                    <a href="{% url 'post' advert.id %}">
+                        <h3 class="card-title">{{ advert.title }} </h3>
+                    </a>
+                    {% for subsection in advert.subsections.all %}
+                        <span class="tag">{{ subsection }}</span>
+                    {% endfor %}
+                    <hr>
+                    <p class="card-text">{{ advert.description|truncatewords:20 }}</p>
+                    <div class="text-right text-muted"><small>
+                        {{ advert.creator }} |
+                        created: {{ advert.created_at|date:"N j Y" }}
+                    </small></div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <nav class="justify-content-center outer-div">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    <li class=" page-item {% if page_obj.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

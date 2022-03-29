@@ -1,0 +1,49 @@
+{% extends "home/base.html" %}
+{% block head_title %}{% if update %}Update post{% else %}Create a post{% endif %}{% endblock head_title %}
+{% block content %}
+    <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
+        <div class="col-lg-4">
+            <div class="card-header justify-content-center">
+                <h3 class=" font-weight-light my-4 text-center">{% if update %}Update post{% else %}Create a post{% endif %}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="small"> {{ form.title.label_tag }} </label>
+                        <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}" id="id_title"
+                               name="title" value='{{ form.title.value|default:"" }}'>
+                        {% if form.title.errors %}
+                            <div class="invalid-feedback">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="small"> {{ form.description.label_tag }} </label>
+                        <textarea type="text" class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="id_description"
+                                  name="description" cols="40" rows="10">{{ form.description.value|default:"" }}</textarea>
+                        {% if form.description.errors %}
+                            <div class="invalid-feedback">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="small" style="font-size: 14px;">Sections:</label><br>
+                        <select class="custom-select small mb-1" name="subsections" id="id_subsections" multiple>
+                            {% for name, value in form.subsections.field.choices %}
+                                <option value="{{ name }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if form.subsections.errors %}
+                            <div class="invalid-feedback">{{ form.subsections.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="col-md-12 btn btn-dark btn-lg button">
+                        {% if update %}Update the post{% else %}Create a post{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

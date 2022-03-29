@@ -1,4 +1,4 @@
-{% extends "login/base.html" %}
+{% extends "home/base.html" %}
 {% block title %}Logout{% endblock title %}
 {% block content %}
     <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
@@ -8,7 +8,7 @@
                 <p class="card-text">
                     Thanks for your time, contact me for any comments or suggestions using my email address.
                 </p>
-                <br><hr><a href="{% url 'login' %}" class="btn btn-primary">Sign in again</a>
+                <br><hr><a class="btn btn-dark btn-lg button" href="{% url 'login' %}" class="btn btn-primary">Sign in again</a>
             </div>
         </div>
     </div>

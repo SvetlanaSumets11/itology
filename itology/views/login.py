@@ -10,10 +10,6 @@ from itology.forms.login import LoginForm, RegisterForm, UpdateClientForm, Updat
 from itology.messages import ACCOUNT_CREATED, EMAILED_INSTRUCTIONS, SUCCESSFUL_CHANGED_PASS, SUCCESSFUL_UPDATED_PROFILE
 
 
-def home(request):
-    return render(request, 'login/home.html')
-
-
 def landing(request):
     return render(request, 'login/landing.html')
 

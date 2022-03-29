@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from PIL import Image
 
-from itology.config import ACCOUNT_TYPE, USER_TYPE, SIZE_IMAGE
+from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, USER_TYPE
 
 
 class AbstractMixin:
@@ -60,18 +60,17 @@ class Subsection(models.Model, AbstractMixin):
 
 
 class Comment(models.Model, AbstractMixin):
-    comment = models.CharField(max_length=128, unique=True, help_text='Comment text')
-    parent = models.ForeignKey(
-        'self', verbose_name='parent', on_delete=models.CASCADE, null=True, related_name='children'
-    )
-    creator = models.ForeignKey('Client', verbose_name='user', on_delete=models.CASCADE,
-                                related_name='comment', help_text='The user who left the comment')
+    content = models.CharField(max_length=128, unique=True, help_text='Comment text')
+    author = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
+                               related_name='comment', help_text='The user who left the comment')
+    advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE, related_name='comment',
+                               help_text='Advert to which the comment was written')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Comment "{self.comment}" from user {self.creator.username}'
+        return f'Comment "{self.content}" from user {self.author.username}'
 
     class Meta:
         verbose_name = 'Comment'
@@ -93,12 +92,9 @@ class Client(models.Model, AbstractMixin):
 
     def save(self, *args, **kwargs):
         super().save()
-
         img = Image.open(self.avatar.path)
-
         if img.height > SIZE_IMAGE or img.width > SIZE_IMAGE:
-            new_img = (SIZE_IMAGE, SIZE_IMAGE)
-            img.thumbnail(new_img)
+            img.thumbnail((SIZE_IMAGE, SIZE_IMAGE))
             img.save(self.avatar.path)
 
     class Meta:
@@ -127,13 +123,12 @@ class Team(models.Model):
 class Advert(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, help_text='Advert of the desired IT product')
     description = models.TextField(help_text='Description of the desired IT product')
-    classify = models.BooleanField(help_text='Flag of expert evaluation of the division of the team into roles')
-    sole_execution = models.BooleanField(help_text='Single project flag')
+    classify = models.BooleanField(null=True, blank=True,
+                                   help_text='Flag of expert evaluation of the division of the team into roles')
+    sole_execution = models.BooleanField(null=True, blank=True, help_text='Single project flag')
 
-    creator = models.ForeignKey('Client', verbose_name='user', on_delete=models.CASCADE,
+    creator = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
                                 related_name='advert', help_text='Advert author')
-    comment = models.ForeignKey('Comment', verbose_name='comment', on_delete=models.CASCADE, related_name='advert',
-                                help_text='Advert comment')
     subsections = models.ManyToManyField('Subsection', verbose_name='subsections', related_name='advert',
                                          help_text='Advert sections')
 
