@@ -10,7 +10,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label class="small mb-1"> {{ form.title.label_tag }} </label>
+                        <label class="small"> {{ form.title.label_tag }} </label>
                         <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}" id="id_title"
                                name="title" value='{{ form.title.value|default:"" }}'>
                         {% if form.title.errors %}
@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="small mb-1"> {{ form.description.label_tag }} </label>
+                        <label class="small"> {{ form.description.label_tag }} </label>
                         <textarea type="text" class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="id_description"
                                   name="description" cols="40" rows="10">{{ form.description.value|default:"" }}</textarea>
                         {% if form.description.errors %}
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="small mb-1">Sections:</label><br>
+                        <label class="small" style="font-size: 14px;">Sections:</label><br>
                         <select class="custom-select small mb-1" name="subsections" id="id_subsections" multiple>
                             {% for name, value in form.subsections.field.choices %}
                                 <option value="{{ name }}">{{ value }}</option>

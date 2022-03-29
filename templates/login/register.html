@@ -2,7 +2,7 @@
 {% block title %} Register Page {% endblock title%}
 {% block content %}
     <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="card-header justify-content-center">
                 <h3 class="font-weight-light my-4 text-center">Create Account</h3>
             </div>
@@ -24,13 +24,13 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1">User type</label>
+                                <label class="small">{{ form.user_type.label_tag }}</label>
                                 {{ form.user_type }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1">Account type</label>
+                                <label class="small">{{ form.account_type.label_tag }}</label>
                                 {{ form.account_type }}
                             </div>
                         </div>
@@ -38,13 +38,13 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1">Username</label>
+                                <label class="small">{{ form.username.label_tag }}</label>
                                 {{ form.username }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1">Email</label>
+                                <label class="small">{{ form.email.label_tag }}</label>
                                 {{ form.email }}
                             </div>
                         </div>
@@ -52,14 +52,14 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1">Password</label>
+                                <label class="small" style="font-size: 14px;">Password:</label>
                                 {{ form.password1 }}
                                 {{ form.errors.password }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1">Confirm Password</label>
+                                <label class="small" style="font-size: 14px;">Confirm Password:</label>
                                 {{ form.password2 }}
                             </div>
                         </div>
