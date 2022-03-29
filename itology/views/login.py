@@ -5,13 +5,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import TemplateView
 
 from itology.forms.login import LoginForm, RegisterForm, UpdateClientForm, UpdateUserForm
 from itology.messages import ACCOUNT_CREATED, EMAILED_INSTRUCTIONS, SUCCESSFUL_CHANGED_PASS, SUCCESSFUL_UPDATED_PROFILE
 
 
-def landing(request):
-    return render(request, 'login/landing.html')
+class Landing(TemplateView):
+    template_name = 'login/landing.html'
 
 
 class RegisterView(View):

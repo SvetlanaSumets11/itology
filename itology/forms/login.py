@@ -32,14 +32,15 @@ class RegisterForm(UserCreationForm):
             attrs=_attrs('Confirm Password') | PASSWORD_FIELDS
         ))
 
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
     def save(self, commit=True):
         user_type = self.cleaned_data['user_type']
         account_type = self.cleaned_data['account_type']
-        email = self.cleaned_data['email']
 
         user = super(RegisterForm, self).save()
-        user.email = email
-        user.save()
         client = Client.objects.create(user=user, user_type=user_type, account_type=account_type)
         client.save()
         return user

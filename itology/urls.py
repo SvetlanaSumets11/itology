@@ -4,10 +4,10 @@ from django.urls import include, path
 from itology.forms.login import LoginForm
 from itology.views.advert_board import HomeView, PostCreateView, PostDeleteView, PostUpdateView, PostView
 from itology.views.login import ChangePasswordView, CustomLoginView, ResetPasswordView
-from itology.views.login import landing, profile, RegisterView
+from itology.views.login import Landing, profile, RegisterView
 
 urlpatterns = [
-    path('', landing, name='landing'),
+    path('', Landing.as_view(), name='landing'),
     path('register/', RegisterView.as_view(), name='users-register'),
     path('profile/', profile, name='users-profile'),
 

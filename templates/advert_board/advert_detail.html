@@ -8,47 +8,25 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <div class="card-body w3-card-2 w3-margin w3-white">
-                        <div class="w3-container">
-                            <div class="text-right text-muted"><small>
-                                created: {{ advert.created_at|date:"N j Y" }} |
-                                last updated: {{ advert.updated_at|timesince }}
-                            </small></div>
-                            <div class="form-row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <div class="form-row outer-div">
-                                            <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} "
-                                                 style="cursor: pointer;"/>
-                                        </div>
-                                        <div class="form-row outer-div">
-                                            <a href="{% url 'users-profile' %}">{{ advert.creator }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <h2 class="card-title">{{ advert.title }}</h2>
-                                        {% for subsection in advert.subsections.all %}
-                                            <span class="tag">{{ subsection }}</span>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <p class="card-text">{{ advert.description }}</p>
-                                        {% if advert.creator == request.user %}
-                                            <div class="mt-4 mx-3">
-                                                <a class="btn btn-dark btn-lg button" href="{% url 'post_update' advert.id %}">Edit</a>
-                                                <a class="btn btn-danger btn-dark btn-lg button" href="{% url 'post_delete' advert.id %}">Delete</a>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                        <span class="w3-right w3-opacity" style="font-size: 13px">created: {{ advert.created_at|date:"N j Y" }} | last updated: {{ advert.updated_at|timesince }}</span>
+                        <img src="{{ user.client.avatar.url }} " alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                        <a href="{% url 'users-profile' %}">{{ advert.creator }}</a><br>
+                        <hr class="w3-clear">
+                        <h3 class="card-title">{{ advert.title }}</h3>
+                        <div style="font-size: 18px">
+                            {% for subsection in advert.subsections.all %}
+                                <span class="tag">{{ subsection }}</span>
+                            {% endfor %}
+                        </div><br>
+                        <p>{{ advert.description }}</p>
+                        {% if advert.creator == request.user %}
+                            <div class="w3-right">
+                                <a class="btn btn-dark btn-lg button" href="{% url 'post_update' advert.id %}">Edit</a>
+                                <a class="btn btn-danger btn-dark btn-lg button" href="{% url 'post_delete' advert.id %}">Delete</a>
+                            </div><br>
+                        {% endif %}
+                        <br>
                     </div>
                 </div>
             </div>
@@ -62,7 +40,7 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <textarea class="form-control {% if form.content.errors %}is-invalid{% endif %}" id="id_content"
-                                      name="content" rows="4">{{ form.content.value|default:'' }}</textarea>
+                                      name="content" rows="6">{{ form.content.value|default:'' }}</textarea>
                             <button class="btn btn-dark btn-lg button" style="float: right;" type="submit">Reply</button>
                         </div>
                     </form>
@@ -71,14 +49,9 @@
                         <span class="badge badge-dark ml-2">{{ comments.count }}</span>
                         {% for comment in comments %}
                             <div class="row">
-                                <div class="col-md-2">
-                                    <img class="rounded-circle mr-2" src="{{ user.client.avatar.url }}" alt="Avatar">
-                                </div>
-                                <div class="col-md-10">
-                                    <strong>{{ comment.author.username }}</strong>
-                                    <p class="m-1 mt-3">{{ comment.content }}</p>
-                                    <p class="text-right text-muted"><small>{{ comment.created_at }}</small></p>
-                                </div>
+                                <img src="{{ user.client.avatar.url }}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                                <p><span class="w3-large w3-text-black w3-margin-right">{{ comment.author.username }}</span> <small class="w3-opacity">{{ comment.created_at }}</small></p>
+                                <p>{{ comment.content }}</p><hr>
                             </div>
                         {% endfor %}
                     {% endif %}
