@@ -11,7 +11,7 @@ from itology.messages import ACCOUNT_CREATED, EMAILED_INSTRUCTIONS, SUCCESSFUL_C
 
 
 def home(request):
-    return render(request, 'login/home.html')
+    return render(request, 'home/home.html')
 
 
 def landing(request):

@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head_title %}{{ advert.title }}{% endblock %}
+{% block content %}
+    <div class="container-fluid bg-2" style="min-height: 80vh">
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="card-body w3-card-2 w3-margin w3-white">
+                        <div class="w3-container">
+                            <div class="text-right text-muted"><small>
+                                created: {{ advert.created_at|date:"N j Y" }} |
+                                last updated: {{ advert.updated_at|timesince }}
+                            </small></div>
+                            <div class="form-row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="form-row outer-div">
+                                            <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} "
+                                                 style="cursor: pointer;"/>
+                                        </div>
+                                        <div class="form-row outer-div">
+                                            <a href="{% url 'users-profile' %}">{{ advert.creator }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <h2 class="card-title">{{ advert.title }}</h2>
+                                        {% for subsection in advert.subsections.all %}
+                                            <span class="tag">{{ subsection }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <p class="card-text">{{ advert.description }}</p>
+                                        {% if advert.creator == request.user %}
+                                            <div class="mt-4 mx-3">
+                                                <a class="btn btn-primary button" href="{% url 'post_update' advert.id %}">Edit</a>
+                                                <a class="btn btn-danger button" href="{% url 'post_delete' advert.id %}">Delete</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Form to leave comment -->
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <h4>Leave a comment</h4>
+                    <form method='POST'>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea class="form-control {% if form.content.errors %}is-invalid{% endif %}" id="id_content"
+                                      name="content" rows="4">{{ form.content.value|default:'' }}</textarea>
+                            <button class="btn btn-primary ml-2 button" style="float: right;" type="submit">Reply</button>
+                        </div>
+                    </form>
+                    {% if comments %}
+                        Comment{{ comments.count|pluralize }}
+                        <span class="badge badge-dark ml-2">{{ comments.count }}</span>
+                        {% for comment in comments %}
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img class="rounded-circle mr-2" src="{{ user.client.avatar.url }}" alt="Avatar">
+                                </div>
+                                <div class="col-md-10">
+                                    <strong>{{ comment.author.username }}</strong>
+                                    <p class="m-1 mt-3">{{ comment.content }}</p>
+                                    <p class="text-right text-muted"><small>{{ comment.created_at }}</small></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
