@@ -41,8 +41,8 @@
                                         <p class="card-text">{{ advert.description }}</p>
                                         {% if advert.creator == request.user %}
                                             <div class="mt-4 mx-3">
-                                                <a class="btn btn-primary button" href="{% url 'post_update' advert.id %}">Edit</a>
-                                                <a class="btn btn-danger button" href="{% url 'post_delete' advert.id %}">Delete</a>
+                                                <a class="btn btn-dark btn-lg button" href="{% url 'post_update' advert.id %}">Edit</a>
+                                                <a class="btn btn-danger btn-dark btn-lg button" href="{% url 'post_delete' advert.id %}">Delete</a>
                                             </div>
                                         {% endif %}
                                     </div>
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <textarea class="form-control {% if form.content.errors %}is-invalid{% endif %}" id="id_content"
                                       name="content" rows="4">{{ form.content.value|default:'' }}</textarea>
-                            <button class="btn btn-primary ml-2 button" style="float: right;" type="submit">Reply</button>
+                            <button class="btn btn-dark btn-lg button" style="float: right;" type="submit">Reply</button>
                         </div>
                     </form>
                     {% if comments %}
