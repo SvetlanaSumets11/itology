@@ -4,58 +4,49 @@
 {% load static %}
 {% block head_title %}{{ advert.title }}{% endblock %}
 {% block content %}
-    <div class="container-fluid bg-2" style="min-height: 80vh">
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-                        <span class="w3-right w3-opacity" style="font-size: 13px">created: {{ advert.created_at|date:"N j Y" }} | last updated: {{ advert.updated_at|timesince }}</span>
-                        <img src="{{ user.client.avatar.url }} " alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                        <a href="{% url 'users-profile' %}">{{ advert.creator }}</a><br>
-                        <hr class="w3-clear">
-                        <h3 class="card-title">{{ advert.title }}</h3>
-                        <div style="font-size: 18px">
-                            {% for subsection in advert.subsections.all %}
-                                <span class="tag">{{ subsection }}</span>
-                            {% endfor %}
-                        </div><br>
-                        <p>{{ advert.description }}</p>
-                        {% if advert.creator == request.user %}
-                            <div class="w3-right">
-                                <a class="btn btn-dark btn-lg button" href="{% url 'post_update' advert.id %}">Edit</a>
-                                <a class="btn btn-danger btn-dark btn-lg button" href="{% url 'post_delete' advert.id %}">Delete</a>
-                            </div><br>
-                        {% endif %}
-                        <br>
-                    </div>
-                </div>
+    <div class="w3-container w3-padding-64 bg-2" style="min-height: 80vh">
+        <div class="w3-row">
+            <div class="w3-col m6 w3-hide-small w3-card w3-padding-large"><br>
+                <span class="w3-right w3-opacity" style="font-size: 13px">created: {{ advert.created_at|date:"N j Y" }} | last updated: {{ advert.updated_at|timesince }}</span>
+                <img src="{{ user.client.avatar.url }} " alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                <a href="{% url 'users-profile' %}" style="font-size: 21px;">{{ advert.creator }}</a><br>
+                <hr class="w3-clear">
+                <h3 class="card-title">{{ advert.title }}</h3>
+                <div style="font-size: 18px">
+                    {% for subsection in advert.subsections.all %}
+                        <span class="tag">{{ subsection }}</span>
+                    {% endfor %}
+                </div><br>
+                <p>{{ advert.description }}</p>
+                {% if advert.creator == request.user %}
+                    <a class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:25px; margin-left: 5px;" href="{% url 'advert_delete' advert.id %}">DELETE</a>
+                    <a class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:25px;" href="{% url 'advert_update' advert.id %}">EDIT</a>
+                {% endif %}
             </div>
-        </div>
-        <!-- Form to leave comment -->
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <h4>Leave a comment</h4>
-                    <form method='POST'>
-                        {% csrf_token %}
-                        <div class="form-group">
+            <!-- Form to leave comment -->
+            <div class="w3-col m6 w3-hide-small w3-padding-large"><br>
+                <h4>Leave a comment</h4>
+                <form method='POST'>
+                    {% csrf_token %}
+                    <div class="form-group">
                             <textarea class="form-control {% if form.content.errors %}is-invalid{% endif %}" id="id_content"
                                       name="content" rows="6">{{ form.content.value|default:'' }}</textarea>
-                            <button class="btn btn-dark btn-lg button" style="float: right;" type="submit">Reply</button>
+                        <button class="w3-button w3-animate-opacity w3-black w3-right w3-section" type="submit">
+                            <i class="fa fa-paper-plane"></i> SEND COMMENT
+                        </button>
+                    </div>
+                </form>
+                {% if comments %}
+                    Comment{{ comments.count|pluralize }}
+                    <span class="badge badge-dark ml-2">{{ comments.count }}</span>
+                    {% for comment in comments %}
+                        <div class="row">
+                            <img src="{{ user.client.avatar.url }}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                            <p><span class="w3-large w3-text-black w3-margin-right">{{ comment.author.username }}</span> <small class="w3-opacity">{{ comment.created_at }}</small></p>
+                            <p>{{ comment.content }}</p><hr>
                         </div>
-                    </form>
-                    {% if comments %}
-                        Comment{{ comments.count|pluralize }}
-                        <span class="badge badge-dark ml-2">{{ comments.count }}</span>
-                        {% for comment in comments %}
-                            <div class="row">
-                                <img src="{{ user.client.avatar.url }}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                                <p><span class="w3-large w3-text-black w3-margin-right">{{ comment.author.username }}</span> <small class="w3-opacity">{{ comment.created_at }}</small></p>
-                                <p>{{ comment.content }}</p><hr>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

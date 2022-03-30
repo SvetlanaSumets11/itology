@@ -118,7 +118,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('account_type', models.CharField(choices=[('Individual', 'Individual'), ('Company', 'Company')], help_text='User account type', max_length=10)),
                 ('user_type', models.CharField(choices=[('Customer', 'Customer'), ('Expert', 'Expert')], help_text='User type in the system', max_length=10)),
-                ('avatar', models.ImageField(default='images/default_avatar.png', upload_to='profile_images')),
+                ('avatar', models.ImageField(default='images/avatar.jpg', upload_to='profile_images')),
                 ('roles', models.ManyToManyField(help_text='The role of an expert in a project', related_name='client', to='itology.role', verbose_name='roles')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='client', to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],

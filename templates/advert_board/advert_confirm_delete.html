@@ -1,13 +1,13 @@
 {% extends "home/base.html" %}
-{% block head_title %}Delete post{% endblock head_title %}
+{% block head_title %}Delete advert{% endblock head_title %}
 {% block content %}
     <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
         <div class="col-lg-4">
-            <h3 class=" my-5">Delete post</h3>
+            <h3 class=" my-5">DELETE ADVERT</h3>
             <form method="POST">
                 {% csrf_token %}
                 <p>Are you sure you want to delete it?</p>
-                <button type="submit" class="btn btn-danger button">Submit</button>
+                <button type="submit" class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red">DELETE</button>
             </form>
         </div>
     </div>

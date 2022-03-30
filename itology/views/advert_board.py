@@ -15,7 +15,7 @@ class HomeView(ListView):
     paginate_by = 10
 
 
-class PostView(DetailView):
+class AdvertView(DetailView):
     model = Advert
     template_name = 'advert_board/advert_detail.html'
 
@@ -45,14 +45,13 @@ class PostView(DetailView):
         return self.render_to_response(context=context)
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class AdvertCreateView(LoginRequiredMixin, CreateView):
     model = Advert
     template_name = 'advert_board/advert_profile.html'
     fields = ['title', 'description', 'subsections']
 
     def get_success_url(self):
-        messages.success(
-            self.request, SUCCESSFUL_CREATED_ADVERT)
+        messages.success(self.request, SUCCESSFUL_CREATED_ADVERT)
         return reverse_lazy('users-home')
 
     def form_valid(self, form):
@@ -62,7 +61,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class AdvertUpdateView(LoginRequiredMixin, UpdateView):
     model = Advert
     template_name = 'advert_board/advert_profile.html'
     fields = ['title', 'description', 'subsections']
@@ -73,21 +72,19 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
     def get_success_url(self):
-        messages.success(
-            self.request, SUCCESSFUL_UPDATED_ADVERT)
+        messages.success(self.request, SUCCESSFUL_UPDATED_ADVERT)
         return reverse_lazy('users-home')
 
     def get_queryset(self):
         return self.model.objects.filter(creator=self.request.user)
 
 
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class AdvertDeleteView(LoginRequiredMixin, DeleteView):
     model = Advert
     template_name = 'advert_board/advert_confirm_delete.html'
 
     def get_success_url(self):
-        messages.success(
-            self.request, SUCCESSFUL_DELETED_ADVERT)
+        messages.success(self.request, SUCCESSFUL_DELETED_ADVERT)
         return reverse_lazy('users-home')
 
     def get_queryset(self):

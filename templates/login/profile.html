@@ -1,27 +1,34 @@
 {% extends "home/base.html" %}
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
-    <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
-        <div class="col-lg-4">
-            <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} " style="cursor: pointer;"/>
-            {% if user_form.errors %}
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <div id="form_errors">
-                        {% for key, value in user_form.errors.items %}
-                            <strong>{{ value }}</strong>
-                        {% endfor %}
-                    </div>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endif %}
-            <div class="form-content">
+    <div class="w3-content w3-container w3-padding-64 bg-2 outer-div">
+        <div class="col-lg-8">
+            <div class="card-header justify-content-center">
+                <h3 class=" font-weight-light my-4 text-center">PROFILE</h3>
+            </div>
+            <div class="card-body">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
+                        <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} " style="cursor: pointer;"/>
+                    </div>
+                    {% if user_form.errors %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <div id="form_errors">
+                                {% for key, value in user_form.errors.items %}
+                                    <strong>{{ value }}</strong>
+                                {% endfor %}
+                            </div>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
                         <label class="small" style="font-size: 14px;">Username:</label>
                         {{ user_form.username }}
+                    </div>
+                    <div class="form-group">
                         <label class="small" style="font-size: 14px;">Email:</label>
                         {{ user_form.email }}
                     </div>
@@ -33,9 +40,9 @@
                             {{ profile_form.avatar }}
                         </div>
                     </div>
-                    <br><br>
-                    <button type="submit" class="btn btn-dark btn-lg button">Save Changes</button>
-                    <button type="reset" class="btn btn-dark btn-lg button">Reset</button>
+                    <br>
+                    <button type="reset" class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:45px; margin-left: 5px;">RESET</button>
+                    <button type="submit" class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:45px">SAVE CHANGES</button>
                 </form>
             </div>
         </div>
