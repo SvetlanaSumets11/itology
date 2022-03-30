@@ -2,17 +2,24 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
 from itology.forms.login import LoginForm
-from itology.views.advert_board import HomeView, PostCreateView, PostDeleteView, PostUpdateView, PostView
-from itology.views.login import ChangePasswordView, CustomLoginView, ResetPasswordView
-from itology.views.login import landing, profile, RegisterView
+from itology.views.advert_board import AdvertCreateView, AdvertDeleteView, AdvertUpdateView, AdvertView, HomeView
+from itology.views.login import (
+    ChangePasswordView,
+    CustomLoginView,
+    CustomLogoutView,
+    Landing,
+    profile,
+    RegisterView,
+    ResetPasswordView,
+)
 
 urlpatterns = [
-    path('', landing, name='landing'),
+    path('', Landing.as_view(), name='landing'),
     path('register/', RegisterView.as_view(), name='users-register'),
     path('profile/', profile, name='users-profile'),
 
     path('accounts/', include('social_django.urls', namespace='social')),
-    path('logout/', auth_views.LogoutView.as_view(template_name='login/logout.html'), name='logout'),
+    path('logout/', CustomLogoutView.as_view(template_name='home/landing.html'), name='logout'),
     path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='login/login.html',
                                            authentication_form=LoginForm), name='login'),
 
@@ -24,8 +31,8 @@ urlpatterns = [
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 
     path('home/', HomeView.as_view(), name='users-home'),
-    path('post/<int:pk>/', PostView.as_view(), name='post'),
-    path('post/create/', PostCreateView.as_view(), name='post_create'),
-    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
-    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
+    path('advert/<int:pk>/', AdvertView.as_view(), name='advert'),
+    path('advert/create/', AdvertCreateView.as_view(), name='advert_create'),
+    path('advert/<int:pk>/update/', AdvertUpdateView.as_view(), name='advert_update'),
+    path('advert/<int:pk>/delete/', AdvertDeleteView.as_view(), name='advert_delete'),
 ]

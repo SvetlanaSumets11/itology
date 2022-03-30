@@ -1,17 +1,18 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import TemplateView
 
 from itology.forms.login import LoginForm, RegisterForm, UpdateClientForm, UpdateUserForm
 from itology.messages import ACCOUNT_CREATED, EMAILED_INSTRUCTIONS, SUCCESSFUL_CHANGED_PASS, SUCCESSFUL_UPDATED_PROFILE
 
 
-def landing(request):
-    return render(request, 'login/landing.html')
+class Landing(TemplateView):
+    template_name = 'home/landing.html'
 
 
 class RegisterView(View):
@@ -47,12 +48,17 @@ class CustomLoginView(LoginView):
         return super(CustomLoginView, self).form_valid(form)
 
 
+class CustomLogoutView(LogoutView):
+    def get_success_url(self):
+        return reverse_lazy('users-home')
+
+
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'login/password_reset.html'
     email_template_name = 'login/password_reset_email.html'
     subject_template_name = 'login/password_reset_subject'
     success_message = EMAILED_INSTRUCTIONS
-    success_url = reverse_lazy('users-home')
+    success_url = reverse_lazy('login')
 
 
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):

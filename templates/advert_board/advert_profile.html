@@ -1,10 +1,10 @@
 {% extends "home/base.html" %}
-{% block head_title %}{% if update %}Update post{% else %}Create a post{% endif %}{% endblock head_title %}
+{% block head_title %}{% if update %}Update advert{% else %}Create advert{% endif %}{% endblock head_title %}
 {% block content %}
-    <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
-        <div class="col-lg-4">
+    <div class="w3-content w3-container w3-padding-64 bg-2 outer-div">
+        <div class="col-lg-8">
             <div class="card-header justify-content-center">
-                <h3 class=" font-weight-light my-4 text-center">{% if update %}Update post{% else %}Create a post{% endif %}</h3>
+                <h3 class=" font-weight-light my-4 text-center">{% if update %}UPDATE ADVERT{% else %}CREATE ADVERT{% endif %}</h3>
             </div>
             <div class="card-body">
                 <form method="POST">
@@ -39,8 +39,8 @@
                         {% endif %}
                     </div>
 
-                    <button type="submit" class="col-md-12 btn btn-dark btn-lg button">
-                        {% if update %}Update the post{% else %}Create a post{% endif %}
+                    <button type="submit" class="col-md-12 w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:45px">
+                        {% if update %}UPDATE ADVERT{% else %}CREATE ADVERT{% endif %}
                     </button>
                 </form>
             </div>

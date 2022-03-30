@@ -82,7 +82,7 @@ class Client(models.Model, AbstractMixin):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='user', related_name='client')
     account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPE, help_text='User account type')
     user_type = models.CharField(max_length=10, choices=USER_TYPE, help_text='User type in the system')
-    avatar = models.ImageField(default='images/default_avatar.png', upload_to='profile_images')
+    avatar = models.ImageField(default='images/avatar.jpg', upload_to='profile_images')
 
     roles = models.ManyToManyField('Role', verbose_name='roles', related_name='client',
                                    help_text='The role of an expert in a project')
