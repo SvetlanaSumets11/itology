@@ -13,8 +13,8 @@
                 <hr class="w3-clear">
                 <h3 class="card-title">{{ advert.title }}</h3>
                 <div style="font-size: 18px">
-                    {% for subsection in advert.subsections.all %}
-                        <span class="tag">{{ subsection }}</span>
+                    {% for section in advert.sections.all %}
+                        <span class="tag">{{ section }}</span>
                     {% endfor %}
                 </div><br>
                 <p>{{ advert.description }}</p>

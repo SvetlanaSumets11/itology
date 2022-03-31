@@ -29,13 +29,13 @@
 
                     <div class="form-group">
                         <label class="small" style="font-size: 14px;">Sections:</label><br>
-                        <select class="custom-select small mb-1" name="subsections" id="id_subsections" multiple>
-                            {% for name, value in form.subsections.field.choices %}
+                        <select class="custom-select small mb-1" name="sections" id="id_sections" multiple>
+                            {% for name, value in form.sections.field.choices %}
                                 <option value="{{ name }}">{{ value }}</option>
                             {% endfor %}
                         </select>
-                        {% if form.subsections.errors %}
-                            <div class="invalid-feedback">{{ form.subsections.errors }}</div>
+                        {% if form.sections.errors %}
+                            <div class="invalid-feedback">{{ form.sections.errors }}</div>
                         {% endif %}
                     </div>
 
