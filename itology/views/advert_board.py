@@ -78,6 +78,12 @@ class AdvertCreateView(LoginRequiredMixin, CreateView):
     template_name = 'advert_board/advert_profile.html'
     fields = ['title', 'description', 'sections']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sections = Section.objects.all()
+        context['sections'] = sections
+        return context
+
     def get_success_url(self):
         messages.success(self.request, SUCCESSFUL_CREATED_ADVERT)
         return reverse_lazy('users-home')

@@ -36,12 +36,7 @@ class Section(models.Model, AbstractMixin):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        full_path = [self.title]
-        section = self.parent
-        while section is not None:
-            full_path.append(section.title)
-            section = section.parent
-        return ' -> '.join(full_path[::-1])
+        return self.title
 
     class Meta:
         verbose_name = 'Section'
