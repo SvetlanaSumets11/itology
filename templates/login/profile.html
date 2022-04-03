@@ -1,50 +1,63 @@
 {% extends "home/base.html" %}
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
-    <div class="w3-content w3-container w3-padding-64 bg-2 outer-div">
-        <div class="col-lg-8">
-            <div class="card-header justify-content-center">
-                <h3 class=" font-weight-light my-4 text-center">PROFILE</h3>
-            </div>
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} " style="cursor: pointer;"/>
-                    </div>
-                    {% if user_form.errors %}
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <div id="form_errors">
-                                {% for key, value in user_form.errors.items %}
-                                    <strong>{{ value }}</strong>
-                                {% endfor %}
-                            </div>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+    <div class="w3-sidebar w3-card w3-hide-small w3-padding-large w3-animate-left w3-padding-64 bg-2 outer-div" style="width:45%;margin-top:19px;">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} " style="cursor: pointer;"/>
+                </div>
+                {% if user_form.errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <div id="form_errors">
+                            {% for key, value in user_form.errors.items %}
+                                <strong>{{ value }}</strong>
+                            {% endfor %}
                         </div>
-                    {% endif %}
-                    <div class="form-group">
-                        <label class="small" style="font-size: 14px;">Username:</label>
-                        {{ user_form.username }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label class="small" style="font-size: 14px;">Email:</label>
-                        {{ user_form.email }}
+                {% endif %}
+                <div class="form-group">
+                    <label class="small" style="font-size: 14px;">Username:</label>
+                    {{ user_form.username }}
+                </div>
+                <div class="form-group">
+                    <label class="small" style="font-size: 14px;">Email:</label>
+                    {{ user_form.email }}
+                </div>
+                <div class="form-group">
+                    <a style="font-size: 14px;" href="{% url 'password_change' %}">Change Password</a>
+                    <hr>
+                    <label class="small" style="font-size: 14px;">Change Avatar:</label>
+                    <div style="font-size: 16px;">
+                        {{ profile_form.avatar }}
                     </div>
-                    <div class="form-group">
-                        <a style="font-size: 14px;" href="{% url 'password_change' %}">Change Password</a>
-                        <hr>
-                        <label class="small" style="font-size: 14px;">Change Avatar:</label>
-                        <div style="font-size: 16px;">
-                            {{ profile_form.avatar }}
-                        </div>
-                    </div>
-                    <br>
-                    <button type="reset" class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:45px; margin-left: 5px;">RESET</button>
-                    <button type="submit" class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:45px">SAVE CHANGES</button>
-                </form>
-            </div>
+                </div>
+                <br>
+                <button type="reset" class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:45px; margin-left: 5px;">RESET</button>
+                <button type="submit" class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:45px">SAVE CHANGES</button>
+            </form>
         </div>
+    </div>
+    <div class="w3-container w3-card w3-padding-64 bg-2" style="margin-left:45%">
+        {% for advert in adverts %}
+            <div class="card-body w3-card-2 w3-margin w3-white">
+                <div class="w3-container">
+                    <a href="{% url 'advert' advert.id %}">
+                        <h3 class="card-title">{{ advert.title }} </h3>
+                    </a>
+                    {% for section in advert.sections.all %}
+                        <span class="tag" style="font-size: 11px;">{{ section }}</span>
+                    {% endfor %}
+                    <div class="text-right text-muted" style="font-size: 18px"><small>
+                        {{ advert.creator }} |
+                        created: {{ advert.created_at|date:"N j Y" }}
+                    </small></div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock content %}

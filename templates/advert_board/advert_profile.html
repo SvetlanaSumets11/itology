@@ -29,13 +29,16 @@
 
                     <div class="form-group">
                         <label class="small" style="font-size: 14px;">Sections:</label><br>
-                        <select class="custom-select small mb-1" name="subsections" id="id_subsections" multiple>
-                            {% for name, value in form.subsections.field.choices %}
-                                <option value="{{ name }}">{{ value }}</option>
+                        <select class="w3-section form-control" name="sections" id="id_sections" multiple>
+                            {% for section in sections %}
+                                {% if section.parent %}
+                                    <option value="{{ section.id }}">{{ section }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
-                        {% if form.subsections.errors %}
-                            <div class="invalid-feedback">{{ form.subsections.errors }}</div>
+
+                        {% if form.sections.errors %}
+                            <div class="invalid-feedback">{{ form.sections.errors }}</div>
                         {% endif %}
                     </div>
 

@@ -1,7 +1,7 @@
+from PIL import Image
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from PIL import Image
 
 from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, USER_TYPE
 
@@ -29,9 +29,15 @@ class Role(models.Model, AbstractMixin):
 
 class Section(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, unique=True, help_text='Name of IT specialization')
+    parent = models.ForeignKey('self', verbose_name='parent', on_delete=models.CASCADE, related_name='children',
+                               null=True, help_text='Name of type of IT specialization')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def get_adverts_amount(self):
+        return sum(ch.advert.count() for ch in self.children.all())
 
     def __str__(self):
         return self.title
@@ -39,23 +45,6 @@ class Section(models.Model, AbstractMixin):
     class Meta:
         verbose_name = 'Section'
         verbose_name_plural = 'Sections'
-        ordering = ['title']
-
-
-class Subsection(models.Model, AbstractMixin):
-    title = models.CharField(max_length=128, unique=True, help_text='Name of IT specialization')
-    section = models.ForeignKey('Section', verbose_name='section', on_delete=models.CASCADE,
-                                related_name='subsection', help_text='Name of type of IT specialization')
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'Subsection {self.title} from section {self.section.title}'
-
-    class Meta:
-        verbose_name = 'Subsection'
-        verbose_name_plural = 'Subsections'
         ordering = ['title']
 
 
@@ -129,8 +118,8 @@ class Advert(models.Model, AbstractMixin):
 
     creator = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
                                 related_name='advert', help_text='Advert author')
-    subsections = models.ManyToManyField('Subsection', verbose_name='subsections', related_name='advert',
-                                         help_text='Advert sections')
+    sections = models.ManyToManyField('Section', verbose_name='sections', related_name='advert',
+                                      help_text='Advert sections')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

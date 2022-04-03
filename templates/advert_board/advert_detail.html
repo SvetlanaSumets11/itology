@@ -9,12 +9,16 @@
             <div class="w3-col m6 w3-hide-small w3-card w3-padding-large"><br>
                 <span class="w3-right w3-opacity" style="font-size: 13px">created: {{ advert.created_at|date:"N j Y" }} | last updated: {{ advert.updated_at|timesince }}</span>
                 <img src="{{ user.client.avatar.url }} " alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                <a href="{% url 'users-profile' %}" style="font-size: 21px;">{{ advert.creator }}</a><br>
+                {% if request.user == advert.creator %}
+                    <a href="{% url 'users-profile' %}" style="font-size: 21px;">{{ advert.creator }}</a><br>
+                {% else %}
+                    <label style="font-size: 21px;">{{ advert.creator.username }}</label><br>
+                {% endif %}
                 <hr class="w3-clear">
                 <h3 class="card-title">{{ advert.title }}</h3>
                 <div style="font-size: 18px">
-                    {% for subsection in advert.subsections.all %}
-                        <span class="tag">{{ subsection }}</span>
+                    {% for section in advert.sections.all %}
+                        <span class="tag">{{ section }}</span>
                     {% endfor %}
                 </div><br>
                 <p>{{ advert.description }}</p>
