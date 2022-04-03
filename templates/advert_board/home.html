@@ -1,16 +1,18 @@
 {% extends 'home/base.html' %}
 {% block content %}
-    <nav class="w3-sidebar w3-card w3-bar-block w3-white w3-collapse w3-top" style="width:250px;margin-top:45px;">
+    <nav class="w3-sidebar w3-card w3-bar-block w3-white w3-collapse w3-top w3-animate-left" style="display:none;width:250px;margin-top:45px;" id="mySidebar">
         <div class="w3-large w3-text-grey" style="font-weight:bold">
             <form method="GET">
                 {% for section in sections %}
                     {% if section.children.exists %}
                         <a href="?section={{ section.title }}" class="w3-button w3-block w3-white w3-left-align">
-                            {{ section.title }}
+                            {{ section.title }} <label class="w3-right" style="font-size: 13px">{{ section.get_adverts_amount }}</label>
                         </a>
                         {% for subsection in section.children.all %}
                             <div class="w3-medium" style="margin-left: 15px;">
-                                <a href="?section={{ subsection.title }}" style="font-size: 14px" class="w3-bar-item w3-button">{{ subsection.title }}</a>
+                                <a href="?section={{ subsection.title }}" style="font-size: 14px" class="w3-bar-item w3-button">
+                                    {{ subsection.title }} <label class="w3-right" style="font-size: 11px">{{ subsection.advert.count }}</label>
+                                </a>
                             </div>
                         {% endfor %}
                     {% else %}
@@ -25,7 +27,13 @@
     <div class="container-fluid bg-2" style="min-height: 100vh;margin-left:250px;">
         <div class="bgimg-1 w3-display-container w3-opacity-min">
             <div class="w3-display-middle w3-center" style="white-space:nowrap;">
-                <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">ITOLOGY - YOUR <span class="w3-hide-small">IT</span> ASSISTANT</span><br><br>
+                <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+                    ITOLOGY - YOUR
+                    <span class="w3-hide-small">IT</span>
+                    ASSISTANT
+                </span>
+                <br>
+                <br>
             </div>
         </div>
 
@@ -77,5 +85,17 @@
             {% endif %}
         </ul>
     </nav>
-
+    <script>
+        function w3_open() {
+            document.getElementById("main").style.marginLeft = "25%";
+            document.getElementById("mySidebar").style.width = "25%";
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("openNav").style.display = 'none';
+        }
+        function w3_close() {
+            document.getElementById("main").style.marginLeft = "0%";
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("openNav").style.display = "inline-block";
+        }
+    </script>
 {% endblock %}

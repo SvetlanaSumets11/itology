@@ -82,4 +82,12 @@ def profile(request):
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateClientForm(instance=request.user.client)
 
-    return render(request, 'login/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(
+        request=request,
+        template_name='login/profile.html',
+        context={
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'adverts': request.user.advert.all(),
+        },
+    )

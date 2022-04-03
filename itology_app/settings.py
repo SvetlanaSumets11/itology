@@ -8,7 +8,7 @@ env.read_env('.env')
 
 DEBUG = env.bool('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '192.168.0.102']
 
 
 # Application definition

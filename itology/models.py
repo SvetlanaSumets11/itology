@@ -1,7 +1,7 @@
+from PIL import Image
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from PIL import Image
 
 from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, USER_TYPE
 
@@ -29,11 +29,15 @@ class Role(models.Model, AbstractMixin):
 
 class Section(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, unique=True, help_text='Name of IT specialization')
-    parent = models.ForeignKey('self',  verbose_name='parent', on_delete=models.CASCADE, related_name='children',
+    parent = models.ForeignKey('self', verbose_name='parent', on_delete=models.CASCADE, related_name='children',
                                null=True, help_text='Name of type of IT specialization')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def get_adverts_amount(self):
+        return sum(ch.advert.count() for ch in self.children.all())
 
     def __str__(self):
         return self.title
