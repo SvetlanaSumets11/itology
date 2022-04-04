@@ -7,7 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from itology.forms.advert_board import CommentForm
 from itology.messages import SUCCESSFUL_CREATED_ADVERT, SUCCESSFUL_DELETED_ADVERT, SUCCESSFUL_UPDATED_ADVERT
-from itology.models import Advert, Comment, Section
+from itology.models import Advert, Comment, Section, Role, Team
 
 
 class HomeView(ListView):
@@ -51,24 +51,34 @@ class AdvertView(DetailView):
         context = super().get_context_data(**kwargs)
         advert = get_object_or_404(Advert, pk=self.kwargs['pk'])
         context['advert'] = advert
+        context['roles'] = Role.objects.all()
         context['comments'] = advert.comment.all()
         context['form'] = CommentForm()
         return context
 
     def post(self, request, *args, **kwargs):
-        form = CommentForm(request.POST)
+        comment_form = CommentForm(request.POST)
         self.object = self.get_object()
         context = super().get_context_data(**kwargs)
 
-        advert = Advert.objects.filter(id=self.kwargs['pk'])[0]
+        advert = Advert.objects.filter(id=self.kwargs['pk']).first()
         context['advert'] = advert
+        context['roles'] = Role.objects.all()
         context['comments'] = advert.comment.all()
-        context['form'] = form
+        context['comment_form'] = comment_form
 
-        if form.is_valid():
-            Comment.objects.create(author=self.request.user, content=form.cleaned_data['content'], advert=advert)
-            context['form'] = CommentForm()
+        if comment_form.is_valid():
+            Comment.objects.create(
+                author=self.request.user,
+                content=comment_form.cleaned_data.get('content'),
+                advert=advert,
+            )
+            context['comment_form'] = CommentForm()
             return self.render_to_response(context=context)
+
+        roles = zip(request.POST.getlist('role'), request.POST.getlist('amount'))
+        for role, amount in roles:
+            Team.objects.create(role=Role.objects.filter(title=role).first(), advert=advert, amount=int(amount))
 
         return self.render_to_response(context=context)
 
@@ -80,8 +90,7 @@ class AdvertCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sections = Section.objects.all()
-        context['sections'] = sections
+        context['sections'] = Section.objects.all()
         return context
 
     def get_success_url(self):
