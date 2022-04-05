@@ -1,7 +1,7 @@
-from PIL import Image
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from PIL import Image
 
 from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, USER_TYPE
 
@@ -112,9 +112,9 @@ class Team(models.Model):
 class Advert(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, help_text='Advert of the desired IT product')
     description = models.TextField(help_text='Description of the desired IT product')
-    classify = models.BooleanField(null=True, blank=True,
+    classify = models.BooleanField(default=False, null=True, blank=True,
                                    help_text='Flag of expert evaluation of the division of the team into roles')
-    sole_execution = models.BooleanField(null=True, blank=True, help_text='Single project flag')
+    sole_execution = models.BooleanField(default=False, null=True, blank=True, help_text='Single project flag')
 
     creator = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
                                 related_name='advert', help_text='Advert author')

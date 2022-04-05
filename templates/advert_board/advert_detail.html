@@ -23,13 +23,16 @@
                         {% endfor %}
                     </div><br>
                     <p>{{ advert.description }}</p>
+                    {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
+                        <a class="w3-button w3-black w3-right w3-animate-opacity w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">FORM TEAM</a>
+                    {% endif %}
                     {% if advert.creator == request.user %}
                         <a class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:25px; margin-left: 5px;" href="{% url 'advert_delete' advert.id %}">DELETE</a>
                         <a class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:25px;" href="{% url 'advert_update' advert.id %}">EDIT</a>
                     {% endif %}
                 </div><br>
 
-                <div class="w3-row w3-card w3-hide-small w3-padding-large form-group" id='forms'>
+                <div class="w3-row w3-card w3-hide-small w3-padding-large form-group" id="estimate" style="display:none;">
                     <form method='POST' class='w3-row'>
                         {% csrf_token %}
                         <button style="margin-left: 5px;" class="w3-button w3-animate-opacity w3-black w3-right w3-section" type="submit">ESTIMATE</button>
@@ -96,5 +99,26 @@
         $(document).ready(addFormElements);
         $(document).on("click", ".add-btn", addFormElements);
         $(document).on("click", ".remove-btn", removeFormElements);
+
+        function showEstimate() {
+            var x = document.getElementById("estimate");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        const btn = document.getElementById('btn');
+
+        btn.addEventListener('click', function handleClick() {
+            const initialText = 'HIDE ESTIMATION';
+
+            if (btn.textContent.toLowerCase().includes(initialText.toLowerCase())) {
+                btn.textContent = 'FORM TEAM';
+            } else {
+                btn.textContent = initialText;
+            }
+        });
     </script>
 {% endblock content %}

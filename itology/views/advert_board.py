@@ -7,7 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from itology.forms.advert_board import CommentForm
 from itology.messages import SUCCESSFUL_CREATED_ADVERT, SUCCESSFUL_DELETED_ADVERT, SUCCESSFUL_UPDATED_ADVERT
-from itology.models import Advert, Comment, Section, Role, Team
+from itology.models import Advert, Comment, Role, Section, Team
 
 
 class HomeView(ListView):
@@ -79,6 +79,8 @@ class AdvertView(DetailView):
         roles = zip(request.POST.getlist('role'), request.POST.getlist('amount'))
         for role, amount in roles:
             Team.objects.create(role=Role.objects.filter(title=role).first(), advert=advert, amount=int(amount))
+        advert.classify = True
+        advert.save()
 
         return self.render_to_response(context=context)
 
