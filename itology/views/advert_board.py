@@ -14,13 +14,13 @@ from itology.models import Advert, Comment, Role, Section, Team
 
 class HomeView(ListView):
     template_name = 'advert_board/home.html'
-    queryset = Advert.objects.all()
+    queryset = Advert.get_all()
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['adverts'] = Advert.objects.all()
-        context['sections'] = Section.objects.all()
+        context['adverts'] = Advert.get_all()
+        context['sections'] = Section.get_all()
         return context
 
     def get(self, request, *args, **kwargs):
@@ -47,9 +47,9 @@ class AdvertView(DetailView):
         context = super().get_context_data(**kwargs)
         advert = get_object_or_404(Advert, pk=self.kwargs['pk'])
         context['advert'] = advert
-        context['roles'] = Role.objects.all()
+        context['roles'] = Role.get_all()
         context['teams'] = Team.objects.filter(advert=advert).all()
-        context['comments'] = advert.comment.all()
+        context['comments'] = advert.comments.all()
         context['form'] = CommentForm()
         return context
 
@@ -60,9 +60,9 @@ class AdvertView(DetailView):
 
         advert = Advert.objects.filter(id=self.kwargs['pk']).first()
         context['advert'] = advert
-        context['roles'] = Role.objects.all()
-        context['teams'] = Team.objects.all()
-        context['comments'] = advert.comment.all()
+        context['roles'] = Role.get_all()
+        context['teams'] = Team.get_all()
+        context['comments'] = advert.comments.all()
         context['comment_form'] = comment_form
 
         if comment_form.is_valid():
@@ -93,7 +93,7 @@ class AdvertCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sections'] = Section.objects.all()
+        context['sections'] = Section.get_all()
         return context
 
     def get_success_url(self):
@@ -114,6 +114,7 @@ class AdvertUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['sections'] = Section.get_all()
         context['update'] = True
         return context
 

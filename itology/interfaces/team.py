@@ -18,6 +18,8 @@ class TeamInterface:
             return
 
         cls._create_team_environment(teams, advert)
+        advert.in_developing = True
+        advert.save()
 
     @classmethod
     def _assign_to_role(cls, advert: Advert, occupied_role: str, user: User):

@@ -8,7 +8,10 @@ class AdvertInterface:
     @staticmethod
     def get_adverts_in_section(section: str) -> list[Advert]:
         section = get_object_or_404(Section, title=section)
-        adverts = Advert.objects.filter(sections__parent=section) if not section.parent else section.advert.all()
+        if not section.parent:
+            adverts = list(set(Advert.objects.filter(sections__parent=section, in_developing=False)))
+        else:
+            adverts = section.adverts.filter(in_developing=False)
         return adverts
 
     @staticmethod
