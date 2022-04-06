@@ -8,6 +8,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from itology.forms.advert_board import CommentForm
 from itology.messages import SUCCESSFUL_CREATED_ADVERT, SUCCESSFUL_DELETED_ADVERT, SUCCESSFUL_UPDATED_ADVERT
 from itology.models import Advert, Comment, Role, Section, Team
+from itology.trello_manager import TrelloManager
 
 
 class HomeView(ListView):
@@ -52,6 +53,7 @@ class AdvertView(DetailView):
         advert = get_object_or_404(Advert, pk=self.kwargs['pk'])
         context['advert'] = advert
         context['roles'] = Role.objects.all()
+        context['teams'] = Team.objects.filter(advert=advert).all()
         context['comments'] = advert.comment.all()
         context['form'] = CommentForm()
         return context
@@ -64,6 +66,7 @@ class AdvertView(DetailView):
         advert = Advert.objects.filter(id=self.kwargs['pk']).first()
         context['advert'] = advert
         context['roles'] = Role.objects.all()
+        context['teams'] = Team.objects.all()
         context['comments'] = advert.comment.all()
         context['comment_form'] = comment_form
 
@@ -76,11 +79,40 @@ class AdvertView(DetailView):
             context['comment_form'] = CommentForm()
             return self.render_to_response(context=context)
 
-        roles = zip(request.POST.getlist('role'), request.POST.getlist('amount'))
-        for role, amount in roles:
-            Team.objects.create(role=Role.objects.filter(title=role).first(), advert=advert, amount=int(amount))
-        advert.classify = True
-        advert.save()
+        roles = request.POST.getlist('role')
+        amounts = request.POST.getlist('amount')
+        if 'Role' not in roles and 'Amount' not in amounts:
+            for role, amount in zip(roles, amounts):
+                Team.objects.create(
+                    role=Role.objects.filter(title=role).first(),
+                    advert=advert,
+                    amount=int(amount),
+                )
+            advert.classify = True
+            advert.save()
+
+        occupied_role = request.POST.get('occupied_role')
+        if occupied_role:
+            teams = Team.objects.filter(advert=advert, role__title=occupied_role).first()
+            teams.members.add(self.request.user)
+            teams.amount = teams.amount - 1
+            teams.save()
+
+            teams = Team.objects.filter(advert=advert).all()
+            for team in teams:
+                if team.amount != 0:
+                    return self.render_to_response(context=context)
+
+            roles = [team.role.title for team in teams]
+            members = []
+            members.extend(team.members.all() for team in teams)
+            emails = list(set(member.first().email for member in members))
+            TrelloManager.create_team_environment(
+                name=advert.title,
+                roles=roles,
+                description=advert.description,
+                emails=emails,
+            )
 
         return self.render_to_response(context=context)
 

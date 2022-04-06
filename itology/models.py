@@ -73,9 +73,6 @@ class Client(models.Model, AbstractMixin):
     user_type = models.CharField(max_length=10, choices=USER_TYPE, help_text='User type in the system')
     avatar = models.ImageField(default='images/avatar.jpg', upload_to='profile_images')
 
-    roles = models.ManyToManyField('Role', verbose_name='roles', related_name='client',
-                                   help_text='The role of an expert in a project')
-
     def __str__(self):
         return self.user.username
 
@@ -97,6 +94,7 @@ class Team(models.Model):
                              related_name='team', help_text='The role of an expert in a project')
     advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE,
                                related_name='team', help_text='Advert of the desired IT product')
+    members = models.ManyToManyField(User, verbose_name='members', related_name='team', help_text='Team members')
     amount = models.IntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)],
                                  help_text='Number of people in this role on the project')
 
@@ -116,7 +114,7 @@ class Advert(models.Model, AbstractMixin):
                                    help_text='Flag of expert evaluation of the division of the team into roles')
     sole_execution = models.BooleanField(default=False, null=True, blank=True, help_text='Single project flag')
 
-    creator = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
+    creator = models.ForeignKey(User, verbose_name='creator', on_delete=models.CASCADE,
                                 related_name='advert', help_text='Advert author')
     sections = models.ManyToManyField('Section', verbose_name='sections', related_name='advert',
                                       help_text='Advert sections')
