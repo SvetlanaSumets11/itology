@@ -6,12 +6,12 @@
                 {% for section in sections %}
                     {% if section.children.exists %}
                         <a href="?section={{ section.title }}" class="w3-button w3-block w3-white w3-left-align">
-                            {{ section.title }} <label class="w3-right" style="font-size: 13px">{{ section.get_adverts_amount }}</label>
+                            {{ section.title }} <label class="w3-right" style="font-size: 13px">{{ section.get_adverts_in_parent }}</label>
                         </a>
                         {% for subsection in section.children.all %}
                             <div class="w3-medium" style="margin-left: 15px;">
                                 <a href="?section={{ subsection.title }}" style="font-size: 14px" class="w3-bar-item w3-button">
-                                    {{ subsection.title }} <label class="w3-right" style="font-size: 11px">{{ subsection.adverts.count }}</label>
+                                    {{ subsection.title }} <label class="w3-right" style="font-size: 11px">{{ subsection.get_adverts_in_children}}</label>
                                 </a>
                             </div>
                         {% endfor %}

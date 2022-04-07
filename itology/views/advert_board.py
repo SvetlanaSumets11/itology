@@ -19,7 +19,7 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['adverts'] = Advert.get_all()
+        context['adverts'] = Advert.objects.filter(in_developing=False)
         context['sections'] = Section.get_all()
         return context
 

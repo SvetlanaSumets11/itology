@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 
+from itology.interfaces.emails import MailInterface
 from itology.models import Advert, Role, Team
 from itology.trello_manager import TrelloManager
 
@@ -18,6 +19,7 @@ class TeamInterface:
             return
 
         cls._create_team_environment(teams, advert)
+        MailInterface.mailed_project_creator(username=user.username, advert=advert)
         advert.in_developing = True
         advert.save()
 
@@ -30,13 +32,11 @@ class TeamInterface:
 
     @staticmethod
     def _create_team_environment(teams: list[Team], advert: Advert):
-        members = []
-        members.extend(team.members.all() for team in teams)
         TrelloManager.create_team_environment(
-            name=advert.title,
+            title=advert.title,
             roles=[team.role.title for team in teams],
             description=advert.description,
-            emails=list(set(member.first().email for member in members)),
+            emails=advert.get_members_emails(),
         )
 
     @classmethod

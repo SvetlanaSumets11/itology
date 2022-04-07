@@ -36,8 +36,12 @@ class Section(models.Model, AbstractMixin):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
-    def get_adverts_amount(self):
-        return sum(len(set(ch.adverts.filter(in_developing=False))) for ch in self.children.all())
+    def get_adverts_in_parent(self):
+        return len(set(ch.adverts.filter(in_developing=False) for ch in self.children.all()))
+
+    @property
+    def get_adverts_in_children(self):
+        return len(set(self.adverts.filter(in_developing=False)))
 
     def __str__(self):
         return self.title
@@ -122,6 +126,18 @@ class Advert(models.Model, AbstractMixin):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_members_emails(self):
+        members = []
+        members.extend(team.members.all() for team in self.teams.all())
+        emails = list(set(member.first().email for member in members))
+        return emails
+
+    def get_members_usernames(self):
+        members = []
+        members.extend(team.members.all() for team in self.teams.all())
+        usernames = list(set(member.first().username for member in members))
+        return usernames
 
     def __str__(self):
         return self.title

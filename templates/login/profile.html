@@ -43,6 +43,7 @@
         </div>
     </div>
     <div class="w3-container w3-card w3-padding-64 bg-2" style="margin-left:45%">
+        <p class="w3-center">YOUR ADVERTS</p>
         {% for advert in adverts %}
             <div class="card-body w3-card-2 w3-margin w3-white">
                 <div class="w3-container">
@@ -52,6 +53,11 @@
                     {% for section in advert.sections.all %}
                         <span class="tag" style="font-size: 11px;">{{ section }}</span>
                     {% endfor %}
+                    {% if advert.in_developing %}
+                        <div class="text-left text-muted" style="font-size: 16px; color: darkblue"><small>
+                            Is under development
+                        </small></div>
+                    {% endif %}
                     <div class="text-right text-muted" style="font-size: 18px"><small>
                         {{ advert.creator }} |
                         created: {{ advert.created_at|date:"N j Y" }}
