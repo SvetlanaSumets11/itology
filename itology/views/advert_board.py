@@ -1,24 +1,26 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from itology.forms.advert_board import CommentForm
+from itology.interfaces.advert import AdvertInterface
+from itology.interfaces.team import TeamInterface
 from itology.messages import SUCCESSFUL_CREATED_ADVERT, SUCCESSFUL_DELETED_ADVERT, SUCCESSFUL_UPDATED_ADVERT
-from itology.models import Advert, Comment, Section
+from itology.models import Advert, Comment, Role, Section, Team
 
 
 class HomeView(ListView):
     template_name = 'advert_board/home.html'
-    queryset = Advert.objects.all()
+    queryset = Advert.get_all()
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['adverts'] = Advert.objects.all()
-        context['sections'] = Section.objects.all()
+        context['adverts'] = Advert.objects.filter(in_developing=False)
+        context['sections'] = Section.get_all()
         return context
 
     def get(self, request, *args, **kwargs):
@@ -28,18 +30,12 @@ class HomeView(ListView):
         adverts = context['adverts']
         section_title = request.GET.get('section')
         if section_title:
-            section = get_object_or_404(Section, title=section_title)
-            adverts = Advert.objects.filter(sections__parent=section) if not section.parent else section.advert.all()
+            adverts = AdvertInterface.get_adverts_in_section(section_title)
 
         paginator = Paginator(adverts, self.paginate_by)
-        try:
-            adverts = paginator.page(request.GET.get('page'))
-        except PageNotAnInteger:
-            adverts = paginator.page(1)
-        except EmptyPage:
-            adverts = paginator.page(paginator.num_pages)
-
+        adverts = AdvertInterface.get_adverts_in_page(paginator, page=request.GET.get('page'))
         context['adverts'] = adverts
+
         return self.render_to_response(context=context)
 
 
@@ -51,24 +47,41 @@ class AdvertView(DetailView):
         context = super().get_context_data(**kwargs)
         advert = get_object_or_404(Advert, pk=self.kwargs['pk'])
         context['advert'] = advert
-        context['comments'] = advert.comment.all()
+        context['roles'] = Role.get_all()
+        context['teams'] = Team.objects.filter(advert=advert).all()
+        context['comments'] = advert.comments.all()
         context['form'] = CommentForm()
         return context
 
     def post(self, request, *args, **kwargs):
-        form = CommentForm(request.POST)
+        comment_form = CommentForm(request.POST)
         self.object = self.get_object()
         context = super().get_context_data(**kwargs)
 
-        advert = Advert.objects.filter(id=self.kwargs['pk'])[0]
+        advert = Advert.objects.filter(id=self.kwargs['pk']).first()
         context['advert'] = advert
-        context['comments'] = advert.comment.all()
-        context['form'] = form
+        context['roles'] = Role.get_all()
+        context['teams'] = Team.get_all()
+        context['comments'] = advert.comments.all()
+        context['comment_form'] = comment_form
 
-        if form.is_valid():
-            Comment.objects.create(author=self.request.user, content=form.cleaned_data['content'], advert=advert)
-            context['form'] = CommentForm()
+        if comment_form.is_valid():
+            Comment.objects.create(
+                author=self.request.user,
+                content=comment_form.cleaned_data.get('content'),
+                advert=advert,
+            )
+            context['comment_form'] = CommentForm()
             return self.render_to_response(context=context)
+
+        roles = request.POST.getlist('role')
+        amounts = request.POST.getlist('amount')
+        if TeamInterface.is_selected_role(roles, amounts):
+            TeamInterface.create_team_of_role(advert, roles, amounts)
+
+        occupied_role = request.POST.get('occupied_role')
+        if occupied_role:
+            TeamInterface.enroll_in_team(advert, occupied_role, user=self.request.user)
 
         return self.render_to_response(context=context)
 
@@ -80,8 +93,7 @@ class AdvertCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sections = Section.objects.all()
-        context['sections'] = sections
+        context['sections'] = Section.get_all()
         return context
 
     def get_success_url(self):
@@ -102,6 +114,7 @@ class AdvertUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['sections'] = Section.get_all()
         context['update'] = True
         return context
 

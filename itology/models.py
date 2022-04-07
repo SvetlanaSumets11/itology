@@ -1,7 +1,7 @@
-from PIL import Image
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from PIL import Image
 
 from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, USER_TYPE
 
@@ -36,8 +36,12 @@ class Section(models.Model, AbstractMixin):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
-    def get_adverts_amount(self):
-        return sum(ch.advert.count() for ch in self.children.all())
+    def get_adverts_in_parent(self):
+        return len(set(ch.adverts.filter(in_developing=False) for ch in self.children.all()))
+
+    @property
+    def get_adverts_in_children(self):
+        return len(set(self.adverts.filter(in_developing=False)))
 
     def __str__(self):
         return self.title
@@ -51,8 +55,8 @@ class Section(models.Model, AbstractMixin):
 class Comment(models.Model, AbstractMixin):
     content = models.CharField(max_length=128, unique=True, help_text='Comment text')
     author = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
-                               related_name='comment', help_text='The user who left the comment')
-    advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE, related_name='comment',
+                               related_name='comments', help_text='The user who left the comment')
+    advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE, related_name='comments',
                                help_text='Advert to which the comment was written')
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -73,9 +77,6 @@ class Client(models.Model, AbstractMixin):
     user_type = models.CharField(max_length=10, choices=USER_TYPE, help_text='User type in the system')
     avatar = models.ImageField(default='images/avatar.jpg', upload_to='profile_images')
 
-    roles = models.ManyToManyField('Role', verbose_name='roles', related_name='client',
-                                   help_text='The role of an expert in a project')
-
     def __str__(self):
         return self.user.username
 
@@ -92,11 +93,12 @@ class Client(models.Model, AbstractMixin):
         ordering = ['user']
 
 
-class Team(models.Model):
+class Team(models.Model, AbstractMixin):
     role = models.ForeignKey('Role', verbose_name='role', on_delete=models.CASCADE,
                              related_name='team', help_text='The role of an expert in a project')
     advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE,
-                               related_name='team', help_text='Advert of the desired IT product')
+                               related_name='teams', help_text='Advert of the desired IT product')
+    members = models.ManyToManyField(User, verbose_name='members', related_name='team', help_text='Team members')
     amount = models.IntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)],
                                  help_text='Number of people in this role on the project')
 
@@ -112,17 +114,30 @@ class Team(models.Model):
 class Advert(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, help_text='Advert of the desired IT product')
     description = models.TextField(help_text='Description of the desired IT product')
-    classify = models.BooleanField(null=True, blank=True,
+    classify = models.BooleanField(default=False, null=True, blank=True,
                                    help_text='Flag of expert evaluation of the division of the team into roles')
-    sole_execution = models.BooleanField(null=True, blank=True, help_text='Single project flag')
+    sole_execution = models.BooleanField(default=False, null=True, blank=True, help_text='Single project flag')
+    in_developing = models.BooleanField(default=False, null=True, blank=True, help_text='Project stage flag')
 
-    creator = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE,
-                                related_name='advert', help_text='Advert author')
-    sections = models.ManyToManyField('Section', verbose_name='sections', related_name='advert',
+    creator = models.ForeignKey(User, verbose_name='creator', on_delete=models.CASCADE,
+                                related_name='adverts', help_text='Advert author')
+    sections = models.ManyToManyField('Section', verbose_name='sections', related_name='adverts',
                                       help_text='Advert sections')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_members_emails(self):
+        members = []
+        members.extend(team.members.all() for team in self.teams.all())
+        emails = list(set(member.first().email for member in members))
+        return emails
+
+    def get_members_usernames(self):
+        members = []
+        members.extend(team.members.all() for team in self.teams.all())
+        usernames = list(set(member.first().username for member in members))
+        return usernames
 
     def __str__(self):
         return self.title

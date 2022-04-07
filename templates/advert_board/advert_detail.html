@@ -6,35 +6,95 @@
 {% block content %}
     <div class="w3-container w3-padding-64 bg-2" style="min-height: 80vh">
         <div class="w3-row">
-            <div class="w3-col m6 w3-hide-small w3-card w3-padding-large"><br>
-                <span class="w3-right w3-opacity" style="font-size: 13px">created: {{ advert.created_at|date:"N j Y" }} | last updated: {{ advert.updated_at|timesince }}</span>
-                <img src="{{ user.client.avatar.url }} " alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-                {% if request.user == advert.creator %}
-                    <a href="{% url 'users-profile' %}" style="font-size: 21px;">{{ advert.creator }}</a><br>
-                {% else %}
-                    <label style="font-size: 21px;">{{ advert.creator.username }}</label><br>
-                {% endif %}
-                <hr class="w3-clear">
-                <h3 class="card-title">{{ advert.title }}</h3>
-                <div style="font-size: 18px">
-                    {% for section in advert.sections.all %}
-                        <span class="tag">{{ section }}</span>
-                    {% endfor %}
+            <div class="w3-col m6"><br>
+                <div class="w3-row w3-card w3-hide-small w3-padding-large">
+                    <span class="w3-right w3-opacity" style="font-size: 13px">created: {{ advert.created_at|date:"N j Y" }} | last updated: {{ advert.updated_at|timesince }}</span>
+                    <img src="{{ user.client.avatar.url }} " alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                    {% if request.user == advert.creator %}
+                        <a href="{% url 'users-profile' %}" style="font-size: 21px;">{{ advert.creator }}</a><br>
+                    {% else %}
+                        <label style="font-size: 21px;">{{ advert.creator.username }}</label><br>
+                    {% endif %}
+                    <hr class="w3-clear">
+                    <h3 class="card-title">{{ advert.title }}</h3>
+                    <div style="font-size: 18px">
+                        {% for section in advert.sections.all %}
+                            <span class="tag">{{ section }}</span>
+                        {% endfor %}
+                    </div><br>
+                    <p>{{ advert.description }}</p>
+                    {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
+                        <button class="w3-button w3-black w3-right w3-animate-opacity w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">FORM TEAM</button>
+                    {% endif %}
+                    {% if advert.creator == request.user %}
+                        <a class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:25px; margin-left: 5px;" href="{% url 'advert_delete' advert.id %}">DELETE</a>
+                        <a class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:25px;" href="{% url 'advert_update' advert.id %}">EDIT</a>
+                    {% endif %}
                 </div><br>
-                <p>{{ advert.description }}</p>
-                {% if advert.creator == request.user %}
-                    <a class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:25px; margin-left: 5px;" href="{% url 'advert_delete' advert.id %}">DELETE</a>
-                    <a class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:25px;" href="{% url 'advert_update' advert.id %}">EDIT</a>
+
+                <div class="w3-row w3-card w3-hide-small w3-padding-large form-group" id="estimate" style="display:none;">
+                    <form method='POST' class='w3-row'>
+                        {% csrf_token %}
+                        <button style="margin-left: 5px;" class="w3-button w3-animate-opacity w3-black w3-right w3-section" type="submit">ESTIMATE</button>
+                        <button class="w3-button w3-light-grey w3-right w3-animate-opacity w3-section add-btn" type="button" >ADD ROLE</button>
+                        <br>
+                        <div class="form-list"></div>
+                    </form>
+                    <div id="form-template" style="display: none">
+                        <div class="form-row" style="padding-top: 50px;">
+                            <select class="w3-col m6 form-control" name="role" id="id_role">
+                                <option> Role </option>
+                                {% for role in roles %}
+                                    <option value="{{ role }}">{{ role }}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="w3-col m2 form-control" name="amount" id="id_amount">
+                                <option> Amount </option>
+                                <option value="1">{{ '1' }}</option>
+                                <option value="2">{{ '2' }}</option>
+                                <option value="3">{{ '3' }}</option>
+                                <option value="4">{{ '4' }}</option>
+                                <option value="5">{{ '5' }}</option>
+                            </select>
+                            <button class="w3-col m1 w3-right remove-btn">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                {% if advert.classify == True and request.user.client.user_type == 'Expert' %}
+                    <div class="w3-row w3-card w3-hide-small w3-padding-large form-group">
+                        {% for team in teams %}
+                            {% for member in team.members.values %}
+                                <div class="w3-row">
+                                    <p class="w3-col m5"><label style="font-size: 16px;">Occupied role:</label> {{ team.role }}</p>
+                                    <label class="w3-button w3-light-grey w3-section w3-col m3">{{ member.username }}</label>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <form method='POST' class='w3-row'>
+                            {% csrf_token %}
+                            {% for team in teams %}
+                                {% with ''|center:team.amount as range %}
+                                    {% for i in range %}
+                                        <div class="w3-row">
+                                            <p class="w3-col m5"><label style="font-size: 16px;">Role:</label> {{ team.role }}</p>
+                                            <button name="occupied_role" value="{{ team.role }}" class="w3-col m3 w3-light-grey w3-animate-opacity w3-section w3-hover-red" type="submit">SIGN UP FOR A ROLE</button>
+                                        </div>
+                                    {% endfor %}
+                                {% endwith %}
+                            {% endfor %}
+                        </form>
+                    </div>
                 {% endif %}
             </div>
+
             <!-- Form to leave comment -->
             <div class="w3-col m6 w3-hide-small w3-padding-large"><br>
                 <h4>Leave a comment</h4>
                 <form method='POST'>
                     {% csrf_token %}
                     <div class="form-group">
-                            <textarea class="form-control {% if form.content.errors %}is-invalid{% endif %}" id="id_content"
-                                      name="content" rows="6">{{ form.content.value|default:'' }}</textarea>
+                            <textarea class="form-control {% if comment_form.content.errors %}is-invalid{% endif %}" id="id_content"
+                                      name="content" rows="6">{{ comment_form.content.value|default:'' }}</textarea>
                         <button class="w3-button w3-animate-opacity w3-black w3-right w3-section" type="submit">
                             <i class="fa fa-paper-plane"></i> SEND COMMENT
                         </button>
@@ -54,4 +114,38 @@
             </div>
         </div>
     </div>
+    <script>
+        function addFormElements() {
+            $('.form-list').append($("#form-template .form-row").clone())
+        }
+
+        function removeFormElements() {
+            $(this).parents('.form-row').remove();
+        }
+
+        $(document).ready(addFormElements);
+        $(document).on("click", ".add-btn", addFormElements);
+        $(document).on("click", ".remove-btn", removeFormElements);
+
+        function showEstimate() {
+            var x = document.getElementById("estimate");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        const btn = document.getElementById('btn');
+
+        btn.addEventListener('click', function handleClick() {
+            const initialText = 'HIDE ESTIMATION';
+
+            if (btn.textContent.toLowerCase().includes(initialText.toLowerCase())) {
+                btn.textContent = 'FORM TEAM';
+            } else {
+                btn.textContent = initialText;
+            }
+        });
+    </script>
 {% endblock content %}

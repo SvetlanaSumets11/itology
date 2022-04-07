@@ -88,6 +88,6 @@ def profile(request):
         context={
             'user_form': user_form,
             'profile_form': profile_form,
-            'adverts': request.user.advert.all(),
+            'adverts': request.user.adverts.all(),
         },
     )
