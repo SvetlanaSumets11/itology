@@ -1,9 +1,19 @@
+from uuid import UUID
+
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from PIL import Image
 
-from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, USER_TYPE
+from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, STATUS, USER_TYPE
+
+
+def _is_valid_uuid(uuid_str: str) -> bool:
+    try:
+        uuid_obj = UUID(uuid_str, version=4)
+    except ValueError:
+        return False
+    return str(uuid_obj) == uuid_str
 
 
 class AbstractMixin:
@@ -27,6 +37,24 @@ class Role(models.Model, AbstractMixin):
         ordering = ['title']
 
 
+class Certificate(models.Model, AbstractMixin):
+    uuid = models.CharField(max_length=128, unique=True, validators=[_is_valid_uuid], help_text='Unique id')
+    nominee = models.ForeignKey(User, verbose_name='nominee', on_delete=models.CASCADE,
+                                related_name='certificates', help_text='Certificate owner')
+    advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE, related_name='certificates',
+                               help_text='The project whose participants are awarded')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.uuid
+
+    class Meta:
+        verbose_name = 'Certificate'
+        verbose_name_plural = 'Certificates'
+
+
 class Section(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, unique=True, help_text='Name of IT specialization')
     parent = models.ForeignKey('self', verbose_name='parent', on_delete=models.CASCADE, related_name='children',
@@ -37,11 +65,11 @@ class Section(models.Model, AbstractMixin):
 
     @property
     def get_adverts_in_parent(self):
-        return len(set(ch.adverts.filter(in_developing=False) for ch in self.children.all()))
+        return len(set(Advert.objects.filter(sections__in=self.children.all(), status='Not active').all()))
 
     @property
     def get_adverts_in_children(self):
-        return len(set(self.adverts.filter(in_developing=False)))
+        return len(set(self.adverts.filter(status='Not active')))
 
     def __str__(self):
         return self.title
@@ -98,7 +126,8 @@ class Team(models.Model, AbstractMixin):
                              related_name='team', help_text='The role of an expert in a project')
     advert = models.ForeignKey('Advert', verbose_name='advert', on_delete=models.CASCADE,
                                related_name='teams', help_text='Advert of the desired IT product')
-    members = models.ManyToManyField(User, verbose_name='members', related_name='team', help_text='Team members')
+    members = models.ManyToManyField(User, verbose_name='members', related_name='teams', help_text='Team members')
+    is_done = models.BooleanField(default=False, null=True, blank=True, help_text='Task execution flag')
     amount = models.IntegerField(default=1, validators=[MinValueValidator(0), MaxValueValidator(5)],
                                  help_text='Number of people in this role on the project')
 
@@ -114,10 +143,11 @@ class Team(models.Model, AbstractMixin):
 class Advert(models.Model, AbstractMixin):
     title = models.CharField(max_length=128, help_text='Advert of the desired IT product')
     description = models.TextField(help_text='Description of the desired IT product')
+    working_environment = models.TextField(null=True, blank=True, help_text='Team work environment')
     classify = models.BooleanField(default=False, null=True, blank=True,
                                    help_text='Flag of expert evaluation of the division of the team into roles')
-    sole_execution = models.BooleanField(default=False, null=True, blank=True, help_text='Single project flag')
-    in_developing = models.BooleanField(default=False, null=True, blank=True, help_text='Project stage flag')
+    status = models.CharField(default='Not active', max_length=14, choices=STATUS, null=True, blank=True,
+                              help_text='Project stage status')
 
     creator = models.ForeignKey(User, verbose_name='creator', on_delete=models.CASCADE,
                                 related_name='adverts', help_text='Advert author')
@@ -127,17 +157,22 @@ class Advert(models.Model, AbstractMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_members_emails(self):
-        members = []
-        members.extend(team.members.all() for team in self.teams.all())
-        emails = list(set(member.first().email for member in members))
-        return emails
+    def get_members_emails(self) -> list[str]:
+        return [member.email for member in self.get_members()]
 
-    def get_members_usernames(self):
-        members = []
-        members.extend(team.members.all() for team in self.teams.all())
-        usernames = list(set(member.first().username for member in members))
-        return usernames
+    def get_members_usernames(self) -> list[str]:
+        return [member.username for member in self.get_members()]
+
+    def get_members(self) -> list[User]:
+        return list(set(User.objects.filter(teams__advert=self).all()))
+
+    def get_user_roles(self, user: User) -> list[Role]:
+        user_teams = self.teams.filter(members__username=user.username, is_done=False)
+        return [team.role for team in user_teams]
+
+    @property
+    def get_environment(self) -> str:
+        return self.working_environment
 
     def __str__(self):
         return self.title

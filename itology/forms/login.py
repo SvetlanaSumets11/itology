@@ -16,6 +16,8 @@ def _attrs(placeholder):
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(max_length=128, required=True, widget=forms.TextInput(attrs=_attrs('Username')))
+    first_name = forms.CharField(max_length=128, required=True, widget=forms.TextInput(attrs=_attrs('First name')))
+    last_name = forms.CharField(max_length=128, required=True, widget=forms.TextInput(attrs=_attrs('Last name')))
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs=_attrs('Email')))
     user_type = forms.CharField(required=True, widget=forms.RadioSelect(choices=USER_TYPE))
     account_type = forms.CharField(required=True, widget=forms.RadioSelect(choices=ACCOUNT_TYPE))
@@ -34,7 +36,7 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name')
 
     def save(self, commit=True):
         user_type = self.cleaned_data['user_type']

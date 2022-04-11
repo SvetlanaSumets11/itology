@@ -9,9 +9,9 @@ class AdvertInterface:
     def get_adverts_in_section(section: str) -> list[Advert]:
         section = get_object_or_404(Section, title=section)
         if not section.parent:
-            adverts = list(set(Advert.objects.filter(sections__parent=section, in_developing=False)))
+            adverts = list(set(Advert.objects.filter(sections__parent=section, status='Not active')))
         else:
-            adverts = section.adverts.filter(in_developing=False)
+            adverts = section.adverts.filter(status='Not active')
         return adverts
 
     @staticmethod

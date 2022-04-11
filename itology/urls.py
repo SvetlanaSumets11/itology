@@ -8,10 +8,10 @@ from itology.views.login import (
     CustomLoginView,
     CustomLogoutView,
     Landing,
-    profile,
     RegisterView,
     ResetPasswordView,
 )
+from itology.views.profile import download_certificate, profile
 
 urlpatterns = [
     path('', Landing.as_view(), name='landing'),
@@ -35,4 +35,6 @@ urlpatterns = [
     path('advert/create/', AdvertCreateView.as_view(), name='advert_create'),
     path('advert/<int:pk>/update/', AdvertUpdateView.as_view(), name='advert_update'),
     path('advert/<int:pk>/delete/', AdvertDeleteView.as_view(), name='advert_delete'),
+
+    path('certificate/<str:uuid>', download_certificate, name='download_certificate')
 ]

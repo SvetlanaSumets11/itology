@@ -19,7 +19,7 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['adverts'] = Advert.objects.filter(in_developing=False)
+        context['adverts'] = Advert.objects.filter(status='Not active')
         context['sections'] = Section.get_all()
         return context
 
@@ -51,6 +51,7 @@ class AdvertView(DetailView):
         context['teams'] = Team.objects.filter(advert=advert).all()
         context['comments'] = advert.comments.all()
         context['form'] = CommentForm()
+        context['my_roles'] = advert.get_user_roles(user=self.request.user)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -61,9 +62,10 @@ class AdvertView(DetailView):
         advert = Advert.objects.filter(id=self.kwargs['pk']).first()
         context['advert'] = advert
         context['roles'] = Role.get_all()
-        context['teams'] = Team.get_all()
+        context['teams'] = Team.objects.filter(advert=advert).all()
         context['comments'] = advert.comments.all()
         context['comment_form'] = comment_form
+        context['my_roles'] = advert.get_user_roles(user=request.user)
 
         if comment_form.is_valid():
             Comment.objects.create(
@@ -76,13 +78,18 @@ class AdvertView(DetailView):
 
         roles = request.POST.getlist('role')
         amounts = request.POST.getlist('amount')
-        if TeamInterface.is_selected_role(roles, amounts):
+        if TeamInterface.has_selected_role(roles, amounts):
             TeamInterface.create_team_of_role(advert, roles, amounts)
 
         occupied_role = request.POST.get('occupied_role')
         if occupied_role:
             TeamInterface.enroll_in_team(advert, occupied_role, user=self.request.user)
 
+        completed_role = request.POST.get('completed_role')
+        if completed_role:
+            TeamInterface.complete_role(advert, completed_role, user=self.request.user)
+
+        context['my_roles'] = advert.get_user_roles(user=request.user)
         return self.render_to_response(context=context)
 
 

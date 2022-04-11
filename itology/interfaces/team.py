@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 
+from itology.certificates.certificates_generator import CertificatesGenerator
 from itology.interfaces.emails import MailInterface
 from itology.models import Advert, Role, Team
 from itology.trello_manager import TrelloManager
@@ -19,8 +20,8 @@ class TeamInterface:
             return
 
         cls._create_team_environment(teams, advert)
-        MailInterface.mailed_project_creator(username=user.username, advert=advert)
-        advert.in_developing = True
+        MailInterface.mailed_creator_about_start(advert=advert)
+        advert.status = 'In development'
         advert.save()
 
     @classmethod
@@ -32,15 +33,17 @@ class TeamInterface:
 
     @staticmethod
     def _create_team_environment(teams: list[Team], advert: Advert):
-        TrelloManager.create_team_environment(
+        environment = TrelloManager.create_team_environment(
             title=advert.title,
             roles=[team.role.title for team in teams],
             description=advert.description,
             emails=advert.get_members_emails(),
         )
+        if environment:
+            advert.working_environment = environment.get('url', '')
 
     @classmethod
-    def is_selected_role(cls, roles: list[Role], amounts: list[str]) -> bool:
+    def has_selected_role(cls, roles: list[Role], amounts: list[str]) -> bool:
         return cls.DEFAULT_ROLE not in roles and cls.DEFAULT_AMOUNT not in amounts
 
     @staticmethod
@@ -53,3 +56,23 @@ class TeamInterface:
             )
         advert.classify = True
         advert.save()
+
+    @staticmethod
+    def complete_role(advert: Advert, role: Role, user: User):
+        team = advert.teams.filter(role__title=role).first()
+        team.is_done = True
+        team.save()
+
+        has_active_roles = advert.teams.filter(is_done=False).all()
+        if not has_active_roles:
+            MailInterface.mailed_creator_about_finish(username=user.username, advert=advert)
+            MailInterface.mailed_developers_about_finish(advert=advert, emails=advert.get_members_emails())
+            advert.status = 'Developed'
+            advert.save()
+
+    @staticmethod
+    def confirm_execution(advert: Advert):
+        advert = Advert.objects.filter(title=advert).first()
+        advert.status = 'Confirmed'
+        advert.save()
+        CertificatesGenerator.generate_certificates(advert)

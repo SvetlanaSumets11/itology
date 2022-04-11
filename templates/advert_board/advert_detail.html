@@ -25,6 +25,16 @@
                     <p>{{ advert.description }}</p>
                     {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
                         <button class="w3-button w3-black w3-right w3-animate-opacity w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">FORM TEAM</button>
+                    {% elif advert.classify == True and request.user.client.user_type == 'Expert' and advert.status == 'In development' %}
+                        <div class="w3-row w3-right">
+                            <form method='POST' class='w3-row'>
+                                {% csrf_token %}
+                                <label>CONFIRM COMPLETION:</label>
+                                {% for role in my_roles %}
+                                    <button name="completed_role" value="{{ role }}" class="w3-button w3-black w3-animate-opacity w3-section" style="margin-left: 5px;" type="submit">{{ role }}</button>
+                                {% endfor %}
+                            </form>
+                        </div>
                     {% endif %}
                     {% if advert.creator == request.user %}
                         <a class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:25px; margin-left: 5px;" href="{% url 'advert_delete' advert.id %}">DELETE</a>
@@ -114,38 +124,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function addFormElements() {
-            $('.form-list').append($("#form-template .form-row").clone())
-        }
-
-        function removeFormElements() {
-            $(this).parents('.form-row').remove();
-        }
-
-        $(document).ready(addFormElements);
-        $(document).on("click", ".add-btn", addFormElements);
-        $(document).on("click", ".remove-btn", removeFormElements);
-
-        function showEstimate() {
-            var x = document.getElementById("estimate");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-
-        const btn = document.getElementById('btn');
-
-        btn.addEventListener('click', function handleClick() {
-            const initialText = 'HIDE ESTIMATION';
-
-            if (btn.textContent.toLowerCase().includes(initialText.toLowerCase())) {
-                btn.textContent = 'FORM TEAM';
-            } else {
-                btn.textContent = initialText;
-            }
-        });
-    </script>
+    <script src="{% static 'js/advert_detail.js' %}"></script>
 {% endblock content %}
