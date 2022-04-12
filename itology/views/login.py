@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
@@ -7,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView
 
-from itology.forms.login import LoginForm, RegisterForm, UpdateClientForm, UpdateUserForm
-from itology.messages import ACCOUNT_CREATED, EMAILED_INSTRUCTIONS, SUCCESSFUL_CHANGED_PASS, SUCCESSFUL_UPDATED_PROFILE
+from itology.forms.login import LoginForm, RegisterForm
+from itology.messages import ACCOUNT_CREATED, EMAILED_INSTRUCTIONS, SUCCESSFUL_CHANGED_PASS
 
 
 class Landing(TemplateView):
@@ -65,29 +64,3 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'login/change_password.html'
     success_message = SUCCESSFUL_CHANGED_PASS
     success_url = reverse_lazy('users-home')
-
-
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateClientForm(request.POST, request.FILES, instance=request.user.client)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, SUCCESSFUL_UPDATED_PROFILE)
-            return redirect(to='users-profile')
-    else:
-        user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateClientForm(instance=request.user.client)
-
-    return render(
-        request=request,
-        template_name='login/profile.html',
-        context={
-            'user_form': user_form,
-            'profile_form': profile_form,
-            'adverts': request.user.adverts.all(),
-        },
-    )

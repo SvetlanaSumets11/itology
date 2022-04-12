@@ -20,3 +20,14 @@ SUBJECT_DEVELOPMENT_NOTIFICATION = 'Start of the project'
 DEVELOPMENT_NOTIFICATION = "Hello {username}!\n\nYour ad '{project}' has been reviewed by our experts, divided into " \
                            "roles to organize the workflow. The development team has started work on your " \
                            "application.\nWait for your finished IT product!\n\nDevelopment participants: {users}."
+
+SUBJECT_COMPLETION_OF_DEVELOPMENT = 'Finish of the project'
+PROJECT_COMPLETION_MESSAGE = "Hello {username}!\n\nProject {project} has been completed. Our developers are ready " \
+                             "to present you a finished IT product.Get it and validate the project."
+
+CONFIRMATION_PENDING_MESSAGE_SUBJECT = 'Finish of the project'
+CONFIRMATION_PENDING_MESSAGE = "Hello! Your team has confirmed the completion of the {project} project. " \
+                               "Congratulations on completing this milestone! The ITology platform has notified " \
+                               "the advertiser that his product is ready, so please wait for his confirmation.\n " \
+                               "As a result, a certificate for each participant in the process will be available " \
+                               "in your profile in the project announcement card."

@@ -1,6 +1,6 @@
 import logging
 import random
-from typing import Optional
+from typing import Optional as Opt
 
 import requests
 from trello import TrelloApi
@@ -15,18 +15,19 @@ _trello = TrelloApi(apikey=TRELLO_API_KEY, token=TRELLO_API_TOKEN)
 
 class TrelloManager:
     @classmethod
-    def create_team_environment(cls, title: str, roles: list[str], description: str, emails: list[str]):
+    def create_team_environment(cls, title: str, roles: list[str], description: str, emails: list[str]) -> Opt[dict]:
         board = cls._create_board(title, description)
         if not board:
-            return
+            return None
 
         cls._create_board_labels(board_id=board['id'], roles=roles)
         for email in emails:
             cls._invite_member_by_email(email, board_id=board['id'])
-        MailInterface.mailed_project_members(title=title, url=board['url'], emails=emails)
+        MailInterface.mailed_developers_about_start(title=title, url=board['url'], emails=emails)
+        return board
 
     @staticmethod
-    def _create_board(name: str, description: str) -> Optional[dict]:
+    def _create_board(name: str, description: str) -> Opt[dict]:
         try:
             board = _trello.boards.new(name, desc=description)
         except requests.RequestException:
