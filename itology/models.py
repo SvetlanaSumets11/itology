@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from PIL import Image
 
-from itology.config import ACCOUNT_TYPE, SIZE_IMAGE, STATUS, USER_TYPE
+from itology.config import ACCOUNT_TYPE, PROJECT_NOT_ACTIVE, SIZE_IMAGE, STATUS, USER_TYPE
 
 
 def _is_valid_uuid(uuid_str: str) -> bool:
@@ -65,11 +65,11 @@ class Section(models.Model, AbstractMixin):
 
     @property
     def get_adverts_in_parent(self):
-        return len(set(Advert.objects.filter(sections__in=self.children.all(), status='Not active').all()))
+        return len(set(Advert.objects.filter(sections__in=self.children.all(), status=PROJECT_NOT_ACTIVE).all()))
 
     @property
     def get_adverts_in_children(self):
-        return len(set(self.adverts.filter(status='Not active')))
+        return len(set(self.adverts.filter(status=PROJECT_NOT_ACTIVE)))
 
     def __str__(self):
         return self.title

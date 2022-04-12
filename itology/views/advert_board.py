@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
+from itology.config import PROJECT_NOT_ACTIVE
 from itology.forms.advert_board import CommentForm
 from itology.interfaces.advert import AdvertInterface
 from itology.interfaces.team import TeamInterface
@@ -19,7 +20,7 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['adverts'] = Advert.objects.filter(status='Not active')
+        context['adverts'] = Advert.objects.filter(status=PROJECT_NOT_ACTIVE)
         context['sections'] = Section.get_all()
         return context
 

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 
 from itology.certificates.certificates_generator import CertificatesGenerator
+from itology.config import PROJECT_CONFIRMED, PROJECT_DEVELOPED, PROJECT_IN_DEVELOPMENT
 from itology.interfaces.emails import MailInterface
 from itology.models import Advert, Role, Team
 from itology.trello_manager import TrelloManager
@@ -21,7 +22,7 @@ class TeamInterface:
 
         cls._create_team_environment(teams, advert)
         MailInterface.mailed_creator_about_start(advert=advert)
-        advert.status = 'In development'
+        advert.status = PROJECT_IN_DEVELOPMENT
         advert.save()
 
     @classmethod
@@ -41,6 +42,7 @@ class TeamInterface:
         )
         if environment:
             advert.working_environment = environment.get('url', '')
+            advert.save()
 
     @classmethod
     def has_selected_role(cls, roles: list[Role], amounts: list[str]) -> bool:
@@ -63,16 +65,16 @@ class TeamInterface:
         team.is_done = True
         team.save()
 
-        has_active_roles = advert.teams.filter(is_done=False).all()
+        has_active_roles = advert.teams.filter(is_done=False).first()
         if not has_active_roles:
             MailInterface.mailed_creator_about_finish(username=user.username, advert=advert)
             MailInterface.mailed_developers_about_finish(advert=advert, emails=advert.get_members_emails())
-            advert.status = 'Developed'
+            advert.status = PROJECT_DEVELOPED
             advert.save()
 
     @staticmethod
     def confirm_execution(advert: Advert):
         advert = Advert.objects.filter(title=advert).first()
-        advert.status = 'Confirmed'
+        advert.status = PROJECT_CONFIRMED
         advert.save()
         CertificatesGenerator.generate_certificates(advert)

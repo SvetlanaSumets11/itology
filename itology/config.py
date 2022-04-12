@@ -7,12 +7,18 @@ env.read_env('.env')
 
 ACCOUNT_TYPE = (('Individual', 'Individual'), ('Company', 'Company'))
 USER_TYPE = (('Customer', 'Customer'), ('Expert', 'Expert'))
+
+PROJECT_NOT_ACTIVE = 'Not active'
+PROJECT_IN_DEVELOPMENT = 'In development'
+PROJECT_DEVELOPED = 'Developed'
+PROJECT_CONFIRMED = 'Confirmed'
 STATUS = (
-    ('Not active', 'Not active'),
-    ('In development', 'In development'),
-    ('Developed', 'Developed'),
-    ('Confirmed', 'Confirmed'),
+    (PROJECT_NOT_ACTIVE, PROJECT_NOT_ACTIVE),
+    (PROJECT_IN_DEVELOPMENT, PROJECT_IN_DEVELOPMENT),
+    (PROJECT_DEVELOPED, PROJECT_DEVELOPED),
+    (PROJECT_CONFIRMED, PROJECT_CONFIRMED),
 )
+
 SIZE_IMAGE = 150
 
 TRELLO_API_TOKEN = env('TRELLO_API_TOKEN')
@@ -22,3 +28,4 @@ COLORS = ('orange', 'green', 'purple', 'blue', 'lime', 'red', 'yellow', 'sky', '
 
 DOWNLOAD_FILE_LINK = env('DOWNLOAD_FILE_LINK')
 REDIRECT_DOWNLOAD_FILE_LINK = env('REDIRECT_DOWNLOAD_FILE_LINK')
+CERTIFICATE_PATTERN_PATH = env('CERTIFICATE_PATTERN_PATH')
