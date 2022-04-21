@@ -1,177 +1,338 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
     <title>ITOLOGY</title>
-    <meta charset="UTF-8">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/glightbox/css/glightbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+
+
 </head>
 <body>
 
-<!-- Navbar (sit on top) -->
-<div class="w3-top">
-    <div class="w3-bar" id="myNavbar">
-        <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
-            <i class="fa fa-bars"></i>
-        </a>
-        <a href="#home" class="w3-bar-item w3-button">HOME</a>
-        <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
-        <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
-        <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
-        <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red" style="color: black">SIGN IN</a>
-    </div>
-</div>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container d-flex justify-content-between align-items-center">
 
-<!-- First Parallax Image with Logo Text -->
-<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
-    <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">YOUR <span class="w3-hide-small">IT</span> ASSISTANT</span><br><br>
-    </div>
-</div>
-
-<!-- Container (About Section) -->
-<div class="w3-content w3-container w3-padding-64" id="about">
-    <h3 class="w3-center">ABOUT ME</h3>
-    <p class="w3-center"><em>I love photography</em></p>
-    <p>We have created a fictional "personal" website/blog, and our fictional character is a hobby photographer. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <div class="w3-row">
-        <div class="w3-col m6 w3-center w3-padding-large">
-            <p><b><i class="fa fa-user w3-margin-right"></i>My Name</b></p><br>
-            <img src="/media/images/home.jpeg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+        <div class="logo">
+            <h1 class="text-light"><a href=""><span>ITOLOGY</span></a></h1>
         </div>
 
-        <!-- Hide this text on small devices -->
-        <div class="w3-col m6 w3-hide-small w3-padding-large">
-            <p>Welcome to my website. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="#about"><i class="fa fa-user"></i>ABOUT</a></li>
+                <li><a href="#portfolio"><i class="fa fa-th"></i>PORTFOLIO</a></li>
+                <li><a href="#contact"><i class="fa fa-envelope"></i>CONTACT</a></li>
+                <li><a href="{% url 'login' %}">SIGN IN</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
     </div>
-    <p class="w3-large w3-center w3-padding-16">Im really good at:</p>
-    <p class="w3-wide"><i class="fa fa-camera"></i>Photography</p>
-    <div class="w3-light-grey">
-        <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:90%">90%</div>
-    </div>
-    <p class="w3-wide"><i class="fa fa-laptop"></i>Web Design</p>
-    <div class="w3-light-grey">
-        <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:85%">85%</div>
-    </div>
-    <p class="w3-wide"><i class="fa fa-photo"></i>Photoshop</p>
-    <div class="w3-light-grey">
-        <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-    </div>
-</div>
+</header><!-- End Header -->
 
-<div class="w3-row w3-center w3-dark-grey w3-padding-16">
-    <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">14+</span><br>
-        Partners
-    </div>
-    <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">55+</span><br>
-        Projects Done
-    </div>
-    <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">89+</span><br>
-        Happy Clients
-    </div>
-    <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">150+</span><br>
-        Meetings
-    </div>
-</div>
-
-<!-- Second Parallax Image with Portfolio Text -->
-<div class="bgimg-2 w3-display-container w3-opacity-min">
-    <div class="w3-display-middle">
-        <span class="w3-xxlarge w3-text-white w3-wide">PORTFOLIO</span>
-    </div>
-</div>
-
-<!-- Container (Portfolio Section) -->
-<div class="w3-content w3-container w3-padding-64" id="portfolio">
-    <h3 class="w3-center">MY WORK</h3>
-    <p class="w3-center"><em>Here are some of my latest lorem work ipsum tipsum.<br> Click on the images to make them bigger</em></p><br>
-
-    <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
-    <div class="w3-row-padding w3-center">
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="The mist over the mountains">
-        </div>
-
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Coffee beans">
-        </div>
-
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Bear closeup">
-        </div>
-
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Quiet ocean">
-        </div>
-    </div>
-
-    <div class="w3-row-padding w3-center w3-section">
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="The mist">
-        </div>
-
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="My beloved typewriter">
-        </div>
-
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Empty ghost train">
-        </div>
-
-        <div class="w3-col m3">
-            <img src="/media/images/home.jpeg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Sailing">
-        </div>
-    </div>
-</div>
-
-<!-- Modal for full size images on click-->
-<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
-    <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
-    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-        <img id="img01" class="w3-image">
-        <p id="caption" class="w3-opacity w3-large"></p>
-    </div>
-</div>
-
-<!-- Third Parallax Image with Portfolio Text -->
-<div class="bgimg-3 w3-display-container w3-opacity-min">
-    <div class="w3-display-middle">
-        <span class="w3-xxlarge w3-text-white w3-wide">CONTACT</span>
-    </div>
-</div>
-
-<!-- Container (Contact Section) -->
-<div class="w3-content w3-container w3-padding-64" id="contact">
-    <h3 class="w3-center">WHERE I WORK</h3>
-    <p class="w3-center"><em>I'd love your feedback!</em></p>
-
-    <div class="w3-row w3-padding-32 w3-section">
-        <div class="w3-col m8 w3-panel">
-            <div class="w3-large w3-margin-bottom">
-                <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +00 151515<br>
-                <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@mail.com<br>
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex justify-cntent-center align-items-center">
+    <div class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-item active">
+            <div class="carousel-container">
+                <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Moderna</span></h2>
+                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
+                <a href="{% url 'login' %}" class="btn-get-started animate__animated animate__fadeInUp">SIDN IN</a>
             </div>
         </div>
     </div>
-</div>
+</section><!-- End Hero -->
 
-<!-- Footer -->
-<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
-    <p>ITology - your assistant in IT services</p>
-</footer>
+<main id="main">
+    <!-- Container (About Section) -->
+    <div class="w3-container w3-content w3-padding-64" data-aos="fade-up" align="justify" id="about">
+        <h3 class="w3-center">ABOUT ME</h3>
+        <p class="w3-center"><em>I love photography</em></p>
+        <p>We have created a fictional "personal" website/blog, and our fictional character is a hobby photographer. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="w3-row">
+            <div class="w3-col m6 w3-center w3-padding-large">
+                <p><b><i class="fa fa-user w3-margin-right"></i>My Name</b></p><br>
+                <img src="/media/images/home.jpeg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+            </div>
+
+            <!-- Hide this text on small devices -->
+            <div class="w3-col m6 w3-hide-small w3-padding-large">
+                <p>Welcome to my website. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
+        <p class="w3-large w3-center w3-padding-16">Im really good at:</p>
+        <p class="w3-wide"><i class="fa fa-camera"></i>Photography</p>
+        <div class="w3-light-grey">
+            <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:90%">90%</div>
+        </div>
+        <p class="w3-wide"><i class="fa fa-laptop"></i>Web Design</p>
+        <div class="w3-light-grey">
+            <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:85%">85%</div>
+        </div>
+        <p class="w3-wide"><i class="fa fa-photo"></i>Photoshop</p>
+        <div class="w3-light-grey">
+            <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
+        </div>
+    </div>
+
+    <div class="w3-row w3-center w3-dark-grey w3-padding-16" data-aos="fade-up">
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">14+</span><br>
+            Partners
+        </div>
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">55+</span><br>
+            Projects Done
+        </div>
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">89+</span><br>
+            Happy Clients
+        </div>
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">150+</span><br>
+            Meetings
+        </div>
+    </div>
+
+    <!-- Second Parallax Image with Portfolio Text -->
+    <div class="bgimg-2 w3-display-container w3-opacity-min">
+        <div class="w3-display-middle">
+            <span class="w3-xxlarge w3-text-white w3-wide">PORTFOLIO</span>
+        </div>
+    </div>
+
+    <section class="features" id="portfolio">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Features</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row" data-aos="fade-up">
+          <div class="col-md-5">
+            <img src="/media/images/features/features-1.svg" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-4">
+            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+            <p class="fst-italic">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua.
+            </p>
+            <ul>
+              <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+              <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row" data-aos="fade-up">
+          <div class="col-md-5 order-1 order-md-2">
+            <img src="/media/images/features/features-2.svg" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5 order-2 order-md-1">
+            <h3>Corporis temporibus maiores provident</h3>
+            <p class="fst-italic">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua.
+            </p>
+            <p>
+              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+              culpa qui officia deserunt mollit anim id est laborum
+            </p>
+          </div>
+        </div>
+
+        <div class="row" data-aos="fade-up">
+          <div class="col-md-5">
+            <img src="/media/images/features/features-3.svg" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5">
+            <h3>Sunt consequatur ad ut est nulla consectetur reiciendis animi voluptas</h3>
+            <p>Cupiditate placeat cupiditate placeat est ipsam culpa. Delectus quia minima quod. Sunt saepe odit aut quia voluptatem hic voluptas dolor doloremque.</p>
+            <ul>
+              <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+              <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+              <li><i class="bi bi-check"></i> Facilis ut et voluptatem aperiam. Autem soluta ad fugiat.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row" data-aos="fade-up">
+          <div class="col-md-5 order-1 order-md-2">
+            <img src="/media/images/features/features-4.svg" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5 order-2 order-md-1">
+            <h3>Quas et necessitatibus eaque impedit ipsum animi consequatur incidunt in</h3>
+            <p class="fst-italic">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua.
+            </p>
+            <p>
+              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+              culpa qui officia deserunt mollit anim id est laborum
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Modal for full size images on click-->
+    <div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'" data-aos="fade-up">
+        <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+        <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+            <img id="img01" class="w3-image">
+            <p id="caption" class="w3-opacity w3-large"></p>
+        </div>
+    </div>
+
+    <!-- Third Parallax Image with Portfolio Text -->
+    <div class="bgimg-3 w3-display-container w3-opacity-min">
+        <div class="w3-display-middle">
+            <span class="w3-xxlarge w3-text-white w3-wide">CONTACT</span>
+        </div>
+    </div>
+
+    <!-- Container (Contact Section) -->
+    <div class="w3-content w3-container w3-padding-64" id="contact" data-aos="fade-up">
+        <h3 class="w3-center">WHERE I WORK</h3>
+        <p class="w3-center"><em>I'd love your feedback!</em></p>
+
+        <div class="w3-row w3-padding-32 w3-section">
+            <div class="w3-col m8 w3-panel">
+                <div class="w3-large w3-margin-bottom">
+                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +00 151515<br>
+                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@mail.com<br>
+                </div>
+            </div>
+        </div>
+    </div>
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+    <div class="footer-newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4>Our Newsletter</h4>
+                    <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                </div>
+                <div class="col-lg-6">
+                    <form action="" method="post">
+                        <input type="email" name="email"><input type="submit" value="Subscribe">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>
+                        A108 Adam Street <br>
+                        New York, NY 535022<br>
+                        United States <br><br>
+                        <strong>Phone:</strong> +1 5589 55488 55<br>
+                        <strong>Email:</strong> info@example.com<br>
+                    </p>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-info">
+                    <h3>About Moderna</h3>
+                    <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Moderna</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa fa-arrow-up"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'js/purecounter/purecounter.js' %}"></script>
+<script src="{% static 'js/aos/aos.js' %}"></script>
+<script src="{% static 'js/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'js/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/waypoints/noframework.waypoints.js' %}"></script>
+<script src="{% static 'js/php-email-form/validate.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
 <script src="{% static 'js/landing.js' %}"></script>
 </body>
 </html>

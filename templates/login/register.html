@@ -1,93 +1,109 @@
 {% extends "home/base.html" %}
+{% load static %}
 {% block title %} Register Page {% endblock title%}
 {% block content %}
-    <div class="container-fluid outer-div bg-2" style="min-height: 80vh">
-        <div class="col-lg-5">
-            <div class="card-header justify-content-center">
-                <h3 class="font-weight-light my-4 text-center">Create Account</h3>
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="{% url 'landing' %}">Home</a></li>
+                    <li>Signup</li>
+                </ol>
             </div>
-            <div class="card-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    {% if form.errors %}
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <div id="form_errors">
-                                {% for key, value in form.errors.items %}
-                                    <strong>{{ value }}</strong>
-                                {% endfor %}
+        </div>
+    </section>
+    <section>
+        <div class="container" data-aos="fade-up">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-md-12 col-lg-12 col-xl-4">
+                    <img src="{% static "media/login.jpg" %}" class="img-fluid">
+                </div>
+                <div class="col-md-12 col-lg-12 col-xl-8">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <div id="form_errors">
+                                    {% for key, value in form.errors.items %}
+                                        <strong>{{ value }}</strong>
+                                    {% endfor %}
+                                </div>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endif %}
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small">{{ form.user_type.label_tag }}</label>
-                                {{ form.user_type }}
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small">{{ form.user_type.label_tag }}</label>
+                                    {{ form.user_type }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small">{{ form.account_type.label_tag }}</label>
-                                {{ form.account_type }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small">{{ form.first_name.label_tag }}</label>
-                                {{ form.first_name }}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small">{{ form.last_name.label_tag }}</label>
-                                {{ form.last_name }}
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small">{{ form.account_type.label_tag }}</label>
+                                    {{ form.account_type }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small">{{ form.username.label_tag }}</label>
-                                {{ form.username }}
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small">{{ form.first_name.label_tag }}</label>
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small">{{ form.last_name.label_tag }}</label>
+                                    {{ form.last_name }}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small">{{ form.email.label_tag }}</label>
-                                {{ form.email }}
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small">{{ form.username.label_tag }}</label>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small">{{ form.email.label_tag }}</label>
+                                    {{ form.email }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small" style="font-size: 14px;">Password:</label>
-                                {{ form.password1 }}
-                                {{ form.errors.password }}
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small" style="font-size: 14px;">Password:</label>
+                                    {{ form.password1 }}
+                                    {{ form.errors.password }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <label class="small" style="font-size: 14px;">Confirm Password:</label>
+                                    {{ form.password2 }}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small" style="font-size: 14px;">Confirm Password:</label>
-                                {{ form.password2 }}
+                        <div class="row outer-div">
+                            <div class="col-md-8">
+                                <button type="submit" class="col-md-12 button w3-section" style="margin-top:45px;">Sign Up</button>
+                                <div class="card-footer text-center col-xl-12">
+                                    <div class="small">
+                                        <a href="{% url 'login' %}">Have an account? Go to Sign in</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group mt-4 mb-0">
-                        <button type="submit" class="col-md-12 w3-button w3-black w3-animate-opacity w3-section">Sign Up</button><br><br>
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer text-center">
-                <div class="small">
-                    <a href="{% url 'login' %}">Have an account? Go to Sign in</a>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+    </section>
 {% endblock content %}

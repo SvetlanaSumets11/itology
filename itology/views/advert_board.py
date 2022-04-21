@@ -15,7 +15,7 @@ from itology.models import Advert, Comment, Role, Section, Team
 
 class HomeView(ListView):
     template_name = 'advert_board/home.html'
-    queryset = Advert.get_all()
+    queryset = Advert.objects.filter(status=PROJECT_NOT_ACTIVE)
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
@@ -36,6 +36,7 @@ class HomeView(ListView):
         paginator = Paginator(adverts, self.paginate_by)
         adverts = AdvertInterface.get_adverts_in_page(paginator, page=request.GET.get('page'))
         context['adverts'] = adverts
+        context['section'] = section_title
 
         return self.render_to_response(context=context)
 

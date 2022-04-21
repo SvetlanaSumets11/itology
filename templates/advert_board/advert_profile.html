@@ -1,52 +1,65 @@
 {% extends "home/base.html" %}
-{% block head_title %}{% if update %}Update advert{% else %}Create advert{% endif %}{% endblock head_title %}
+{% load static %}
 {% block content %}
-    <div class="w3-content w3-container w3-padding-64 bg-2 outer-div">
-        <div class="col-lg-8">
-            <div class="card-header justify-content-center">
-                <h3 class=" font-weight-light my-4 text-center">{% if update %}UPDATE ADVERT{% else %}CREATE ADVERT{% endif %}</h3>
-            </div>
-            <div class="card-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label class="small"> {{ form.title.label_tag }} </label>
-                        <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}" id="id_title"
-                               name="title" value='{{ form.title.value|default:"" }}'>
-                        {% if form.title.errors %}
-                            <div class="invalid-feedback">{{ form.title.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="small"> {{ form.description.label_tag }} </label>
-                        <textarea type="text" class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="id_description"
-                                  name="description" cols="40" rows="10">{{ form.description.value|default:"" }}</textarea>
-                        {% if form.description.errors %}
-                            <div class="invalid-feedback">{{ form.description.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="small" style="font-size: 14px;">Sections:</label><br>
-                        <select class="w3-section form-control" name="sections" id="id_sections" multiple>
-                            {% for section in sections %}
-                                {% if section.parent %}
-                                    <option value="{{ section.id }}">{{ section }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-
-                        {% if form.sections.errors %}
-                            <div class="invalid-feedback">{{ form.sections.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <button type="submit" class="col-md-12 w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:45px">
-                        {% if update %}UPDATE ADVERT{% else %}CREATE ADVERT{% endif %}
-                    </button>
-                </form>
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="{% url 'users-home' %}">Home</a></li>
+                    <li>{% if update %}Update advert{% else %}Create advert{% endif %}</li>
+                </ol>
             </div>
         </div>
-    </div>
+    </section>
+    <section>
+        <div class="container" data-aos="fade-up">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-md-8 col-lg-7 col-xl-6">
+                    <img src="{% static "media/advert.jpg" %}" class="img-fluid">
+                </div>
+                <div class="col-md-7 col-lg-5 col-xl-6">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-outline mb-4">
+                            <label class="small"> {{ form.title.label_tag }} </label>
+                            <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}" id="id_title"
+                                   name="title" value='{{ form.title.value|default:"" }}'>
+                            {% if form.title.errors %}
+                                <div class="invalid-feedback">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label class="small"> {{ form.description.label_tag }} </label>
+                            <textarea type="text" class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="id_description"
+                                      name="description" cols="40" rows="10">{{ form.description.value|default:"" }}</textarea>
+                            {% if form.description.errors %}
+                                <div class="invalid-feedback">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label class="small" style="font-size: 14px;">Sections:</label><br>
+                            <select class="w3-section form-control" name="sections" id="id_sections" multiple>
+                                {% for section in sections %}
+                                    {% if section.parent %}
+                                        <option value="{{ section.id }}">{{ section }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+
+                            {% if form.sections.errors %}
+                                <div class="invalid-feedback">{{ form.sections.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="row outer-div">
+                            <button type="submit" class="col-md-8 button w3-section" style="margin-top:45px">
+                                {% if update %}Update advert{% else %}Create advert{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
