@@ -59,7 +59,7 @@
                 <div class="w3-twothird">
                     {% if request.user.client.user_type == 'Customer' %}
                         <div class="w3-container w3-card w3-white w3-margin-bottom">
-                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Your adverts with no response</h2>
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My adverts with no response</h2>
                             {% for advert in adverts %}
                                 {% if advert.status == 'Not active'%}
                                     <div class="w3-container">
@@ -136,17 +136,21 @@
                             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My projects in developing</h2>
                             {% for project in projects %}
                                 {% if project.status == 'In development' %}
-                                    <div class="w3-container">
-                                        <h3 class="entry-title">
-                                            <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
-                                        </h3>
-                                        <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
-                                        {% for role in roles %}
-                                            <span class="tag" style="font-size: 11px;">{{ role }}</span>
-                                        {% endfor %}
-                                        <br><br>
-                                        <p>{{ project.description }}</p>
-                                        <hr>
+                                    <div class="row">
+                                        <div class="col-lg-8 entries">
+                                            <div class="w3-container">
+                                                <h3 class="entry-title">
+                                                    <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
+                                                </h3>
+                                                <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
+                                                <br><br>
+                                                <p>{{ project.description }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 entries">
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                        </div>
                                     </div>
                                 {% endif%}
                             {% endfor%}
@@ -156,17 +160,21 @@
                             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My developed projects</h2>
                             {% for project in projects %}
                                 {% if project.status == 'Developed' %}
-                                    <div class="w3-container">
-                                        <h3 class="entry-title">
-                                            <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
-                                        </h3>
-                                        <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
-                                        {% for role in roles %}
-                                            <span class="tag" style="font-size: 11px;">{{ role }}</span>
-                                        {% endfor %}
-                                        <br><br>
-                                        <p>{{ project.description }}</p>
-                                        <hr>
+                                    <div class="row">
+                                        <div class="col-lg-8 entries">
+                                            <div class="w3-container">
+                                                <h3 class="entry-title">
+                                                    <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
+                                                </h3>
+                                                <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
+                                                <br><br>
+                                                <p>{{ project.description }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 entries">
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                        </div>
                                     </div>
                                 {% elif project.status == 'Confirmed' %}
                                     <div class="row">
@@ -176,15 +184,13 @@
                                                     <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
                                                 </h3>
                                                 <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
-                                                {% for role in roles %}
-                                                    <span class="tag" style="font-size: 11px;">{{ role }}</span>
-                                                {% endfor %}
                                                 <br><br>
                                                 <p>{{ project.description }}</p>
                                                 <hr>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 entries">
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
                                             <form method="post">
                                                 {% csrf_token %}
                                                 <button name="download_certificate" value="{{ project }}" class="button w3-section add-btn" type="submit"><i class="fa fa-download fa-fw w3-margin-right" style="color: white"></i>Download certificates</button>
