@@ -1,108 +1,208 @@
 {% extends "home/base.html" %}
 {% block title %}Profile Page{% endblock title %}
 {% block content %}
-    <div class="w3-sidebar w3-card w3-hide-small w3-padding-large w3-animate-left w3-padding-64 bg-2 outer-div" style="width:45%;margin-top:19px;">
-        <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <img class="rounded-circle account-img" src="{{ user.client.avatar.url }} " style="cursor: pointer;"/>
-                </div>
-                {% if user_form.errors %}
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <div id="form_errors">
-                            {% for key, value in user_form.errors.items %}
-                                <strong>{{ value }}</strong>
-                            {% endfor %}
-                        </div>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endif %}
-                <div class="form-group">
-                    <label class="small" style="font-size: 14px;">Username:</label>
-                    {{ user_form.username }}
-                </div>
-                <div class="form-group">
-                    <label class="small" style="font-size: 14px;">Email:</label>
-                    {{ user_form.email }}
-                </div>
-                <div class="form-group">
-                    <a style="font-size: 14px;" href="{% url 'password_change' %}">Change Password</a>
-                    <hr>
-                    <label class="small" style="font-size: 14px;">Change Avatar:</label>
-                    <div style="font-size: 16px;">
-                        {{ profile_form.avatar }}
-                    </div>
-                </div>
-                <br>
-                <button type="reset" class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:45px; margin-left: 5px;">RESET</button>
-                <button type="submit" class="w3-button w3-black w3-right w3-animate-opacity w3-section" style="margin-top:45px">SAVE CHANGES</button>
-            </form>
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="{% url 'users-home' %}">Home</a></li>
+                    <li>Profile</li>
+                </ol>
+            </div>
         </div>
-    </div>
-    <div class="w3-container w3-card w3-padding-64 bg-2" style="margin-left:45%">
-        {% if request.user.client.user_type == 'Customer' %}
-            <p class="w3-center">YOUR ADVERTS</p>
-            {% for advert in adverts %}
-                <div class="w3-row outer-div">
-                    <div class="w3-col m10 card-body w3-card-2 w3-margin w3-white">
-                        <div class="w3-container">
-                            <a href="{% url 'advert' advert.id %}">
-                                <h3 class="card-title">{{ advert.title }} </h3>
-                            </a>
-                            {% for section in advert.sections.all %}
-                                <span class="tag" style="font-size: 11px;">{{ section }}</span>
-                            {% endfor %}
-                            <div class="text-left text-muted" style="font-size: 16px; color: darkblue"><small>
-                                {{ advert.status }}
-                            </small></div>
-                            {% if advert.status == 'Developed' %}
-                                <form method='POST' class='w3-row'>
-                                    {% csrf_token %}
-                                    <div class="w3-container">
-                                        <button name="confirmation" value="{{ advert }}" type="submit" class="w3-button w3-black w3-right w3-animate-opacity w3-section w3-hover-red" style="margin-top:45px; margin-left: 5px;">CONFIRM EXECUTION</button>
-                                    </div>
-                                </form>
-                            {% endif %}
-                            <div class="text-right text-muted" style="font-size: 18px"><small>
-                                {{ advert.creator }} |
-                                created: {{ advert.created_at|date:"N j Y" }}
-                            </small></div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p class="w3-center">YOUR PROJECTS</p>
-            {% for project in projects %}
-                <div class="w3-row outer-div">
-                    <div class="w3-col m10 card-body w3-card-2 w3-margin w3-white">
-                        <div class="w3-container">
-                            <a href="{% url 'advert' project.id %}">
-                                <h3 class="card-title">{{ project.title }} </h3>
-                            </a>
-                            {% for role in roles %}
-                                <span class="tag" style="font-size: 11px;">{{ role }}</span>
-                            {% endfor %}
-                            <div class="w3-container">
-                                <a class="w3-right w3-button w3-black w3-center w3-animate-opacity w3-section w3-hover-red" href="{{ project.get_environment }}">YOUR ENVIRONMENT</a>
-                                {% if project.status == 'Confirmed' %}
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <button name="download_certificate" value="{{ project }}" class="w3-button w3-light-grey w3-left w3-animate-opacity w3-section add-btn" type="submit">DOWNLOAD CERTIFICATE</button>
-                                    </form>
-                                {% endif %}
+    </section>
+    <section>
+        <div class="container" data-aos="fade-up">
+            <div class="w3-row-padding">
+                <div class="w3-third">
+                    <div class="w3-white w3-text-grey w3-card-4">
+                        <div class="w3-display-container">
+                            <img src="{{ user.client.avatar.url }}" style="width:100%" alt="Avatar"/>
+                            <div class="w3-display-bottomleft w3-container w3-text-black">
+                                <h2>{{ user.username }}</h2>
                             </div>
-                            <div class="text-right text-muted" style="font-size: 18px"><small>
-                                {{ project.creator }} |
-                                created: {{ project.created_at|date:"N j Y" }}
-                            </small></div>
                         </div>
-                    </div>
+                        <div class="w3-container" style="margin-top: 14px;">
+                            <p><i class="fa fa-user fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Name:</label> {{ user.first_name}} {{user.last_name }}</p>
+                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356"> Email:</label> {{ user.email }}</p>
+                            <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">User type:</label> {{ user.client.user_type }}</p>
+                            <p><i class="fa fa-group fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Account type:</label> {{ user.client.account_type }}</p>
+                            <hr>
+                            <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right" style="color: #1e4356"></i>Update data</b></p>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-outline mb-4">
+                                    <label class="small" style="font-size: 14px;">Username:</label>
+                                    {{ user_form.username }}
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="small" style="font-size: 14px;">Email:</label>
+                                    {{ user_form.email }}
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <a style="font-size: 14px;" href="{% url 'password_change' %}">Change Password</a>
+                                    <hr>
+                                    <label class="small" style="font-size: 14px;">Change Avatar:</label>
+                                    <div style="font-size: 16px;">
+                                        {{ profile_form.avatar }}
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="reset" class="col-md-3 w3-right button w3-section" style="margin-top:45px; margin-left: 5px;">Reset</button>
+                                <button type="submit" class="col-md-5 w3-right button w3-section" style="margin-top:45px;">Save changes</button>
+                            </form>
+                            <br>
+                        </div>
+                    </div><br>
                 </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+
+                <div class="w3-twothird">
+                    {% if request.user.client.user_type == 'Customer' %}
+                        <div class="w3-container w3-card w3-white w3-margin-bottom">
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My adverts with no response</h2>
+                            {% for advert in adverts %}
+                                {% if advert.status == 'Not active'%}
+                                    <div class="w3-container">
+                                        <h3 class="entry-title">
+                                            <a href="{% url 'advert' advert.id %}">{{ advert.title }}</a>
+                                        </h3>
+                                        <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ advert.created_at|date:"N j Y" }}</h6>
+                                        {% for section in advert.sections.all %}
+                                            <span class="tag" style="font-size: 11px;">{{ section }}</span>
+                                        {% endfor %}
+                                        <br><br>
+                                        <p>{{ advert.description }}</p>
+                                        <hr>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="w3-container w3-card w3-white w3-margin-bottom">
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>In development</h2>
+                            {% for advert in adverts %}
+                                {% if advert.status == 'In development' %}
+                                    <div class="w3-container">
+                                        <h3 class="entry-title">
+                                            <a href="{% url 'advert' advert.id %}">{{ advert.title }}</a>
+                                        </h3>
+                                        <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ advert.created_at|date:"N j Y" }}</h6>
+                                        {% for section in advert.sections.all %}
+                                            <span class="tag" style="font-size: 11px;">{{ section }}</span>
+                                        {% endfor %}
+                                        <br><br>
+                                        <p>{{ advert.description }}</p>
+                                        <hr>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="w3-container w3-card w3-white">
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Completed projects</h2>
+                            {% for advert in adverts %}
+                                {% if advert.status == 'Developed' or advert.status == 'Confirmed' %}
+                                    <div class="row">
+                                        <div class="col-lg-8 entries">
+                                            <div class="w3-container">
+                                                <h3 class="entry-title">
+                                                    <a href="{% url 'advert' advert.id %}">{{ advert.title }}</a>
+                                                </h3>
+                                                <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ advert.created_at|date:"N j Y" }}</h6>
+                                                {% for section in advert.sections.all %}
+                                                    <span class="tag" style="font-size: 11px;">{{ section }}</span>
+                                                {% endfor %}
+                                                <br><br>
+                                                <p>{{ advert.description }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        {% if advert.status == 'Developed' %}
+                                            <div class="col-lg-4 entries">
+                                                <form method='POST' class='w3-row'>
+                                                    {% csrf_token %}
+                                                    <div class="w3-container">
+                                                        <button name="confirmation" value="{{ advert }}" type="submit" class="button w3-right w3-section" style="margin-top:45px; margin-left: 5px;">Confirm execution</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="w3-container w3-card w3-white">
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My projects in developing</h2>
+                            {% for project in projects %}
+                                {% if project.status == 'In development' %}
+                                    <div class="row">
+                                        <div class="col-lg-8 entries">
+                                            <div class="w3-container">
+                                                <h3 class="entry-title">
+                                                    <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
+                                                </h3>
+                                                <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
+                                                <br><br>
+                                                <p>{{ project.description }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 entries">
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                        </div>
+                                    </div>
+                                {% endif%}
+                            {% endfor%}
+                        </div>
+                        <br>
+                        <div class="w3-container w3-card w3-white">
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My developed projects</h2>
+                            {% for project in projects %}
+                                {% if project.status == 'Developed' %}
+                                    <div class="row">
+                                        <div class="col-lg-8 entries">
+                                            <div class="w3-container">
+                                                <h3 class="entry-title">
+                                                    <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
+                                                </h3>
+                                                <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
+                                                <br><br>
+                                                <p>{{ project.description }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 entries">
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                        </div>
+                                    </div>
+                                {% elif project.status == 'Confirmed' %}
+                                    <div class="row">
+                                        <div class="col-lg-8 entries">
+                                            <div class="w3-container">
+                                                <h3 class="entry-title">
+                                                    <a href="{% url 'advert' project.id %}">{{ project.title }}</a>
+                                                </h3>
+                                                <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
+                                                <br><br>
+                                                <p>{{ project.description }}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 entries">
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <button name="download_certificate" value="{{ project }}" class="button w3-section add-btn" type="submit"><i class="fa fa-download fa-fw w3-margin-right" style="color: white"></i>Download certificates</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}

@@ -27,10 +27,10 @@ class TeamInterface:
 
     @classmethod
     def _assign_to_role(cls, advert: Advert, occupied_role: str, user: User):
-        teams = Team.objects.filter(advert=advert, role__title=occupied_role).first()
-        teams.members.add(user)
-        teams.amount -= 1
-        teams.save()
+        team = Team.objects.filter(advert=advert, role__title=occupied_role).first()
+        team.members.add(user)
+        team.amount -= 1
+        team.save()
 
     @staticmethod
     def _create_team_environment(teams: list[Team], advert: Advert):

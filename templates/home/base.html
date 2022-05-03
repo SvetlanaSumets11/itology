@@ -1,63 +1,211 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>{% block title %} {% endblock %}</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>ITOLOGY</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/glightbox/css/glightbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
 </head>
 <body>
-<div class="w3-top">
-    <div class="w3-white w3-card">
-        <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
-            <i class="fa fa-bars"></i>
-        </a>
+
+<!-- ======= Header ======= -->
+{% if user.is_authenticated and request.path == '/home/' %}
+    <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+{% else %}
+    <header id="header" class="fixed-top d-flex align-items-center">
+{% endif %}
+<div class="container d-flex justify-content-between align-items-center">
+
+    <div class="logo">
         {% if user.is_authenticated %}
-            <a href="/home" class="w3-bar-item w3-button">HOME</a>
+            <div class="row">
+                <div class="col">
+                    <img src="/media/images/logo.png" alt="">
+                </div>
+                <div class="col">
+                    <h1 class="text-light"><a href="/home"><span>ITOLOGY</span></a></h1>
+                </div>
+            </div>
         {% else %}
-            <a href="/" class="w3-bar-item w3-button">HOME</a>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">LOGOUT</a>
-            <a href="{% url 'users-profile' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">PROFILE</a>
-            {% if request.user.client.user_type == 'Customer' %}
-                <a href="{% url 'advert_create' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red {% if request.path == '/advert/create/' %}active{% endif %}">ADD ADVERT</a>
-            {% endif %}
-        {% else %}
-            <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">SIGN IN</a>
+            <div class="row">
+                <div class="col">
+                    <img src="/media/images/logo.png" alt="">
+                </div>
+                <div class="col">
+                    <h1 class="text-light"><a href="/"><span>ITOLOGY</span></a></h1>
+                </div>
+            </div>
         {% endif %}
     </div>
+
+    <nav id="navbar" class="navbar">
+        <ul>
+            {% if user.is_authenticated %}
+                {% if request.user.client.user_type == 'Customer' %}
+                    <li><a href="{% url 'advert_create' %}" class="{% if request.path == '/advert/create/' %}active{% endif %}">Add advert</a></li>
+                {% endif %}
+                <li><a href="{% url 'users-profile' %}">Profile</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Sign in</a></li>
+            {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
 </div>
-{% if messages %}
-    <br>
-    <div class="alert alert-dismissible" role="alert">
-        <div class="w3-row">
-            <div class="w3-col m11 w3-hide-small w3-padding-large">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-            <div class="w3-col m1 w3-hide-small w3-padding-large">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+</header><!-- End Header -->
+{% if user.is_authenticated and request.path == '/home/' %}
+    <section id="head" class="d-flex flex-column justify-content-end align-items-center">
+        <br><br><br><br>
+        <svg class="head-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 30" preserveAspectRatio="none">
+            <defs>
+                <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+            </defs>
+            <g class="wave1">
+                <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)"></use>
+            </g>
+            <g class="wave2">
+                <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)"></use>
+            </g>
+            <g class="wave3">
+                <use xlink:href="#wave-path" x="50" y="9" fill="#fff"></use>
+            </g>
+        </svg>
+    </section>
+{% endif %}
+{% if user.is_authenticated and request.path == '/home/' %}
+    <main>
+{% else %}
+    <main id="main">
+{% endif %}
+{% block content %}{% endblock %}
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+    <div class="footer-newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4>Our Newsletter</h4>
+                    <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                </div>
+                <div class="col-lg-6">
+                    <form action="" method="post">
+                        <input type="email" name="email"><input type="submit" value="Subscribe">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-{% endif %}
-<br>
-{% block content %}{% endblock %}
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>
+                        A108 Adam Street <br>
+                        New York, NY 535022<br>
+                        United States <br><br>
+                        <strong>Phone:</strong> +1 5589 55488 55<br>
+                        <strong>Email:</strong> info@example.com<br>
+                    </p>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-info">
+                    <h3>About Moderna</h3>
+                    <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Moderna</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa fa-arrow-up"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'js/purecounter/purecounter.js' %}"></script>
+<script src="{% static 'js/aos/aos.js' %}"></script>
+<script src="{% static 'js/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'js/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/waypoints/noframework.waypoints.js' %}"></script>
+<script src="{% static 'js/php-email-form/validate.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/advert_detail.js' %}"></script>
 </body>
-<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
-    <p>ITology - your assistant in IT services</p>
-</footer>
+
 </html>
