@@ -18,7 +18,7 @@
         <div class="container" data-aos="fade-up">
             <div class="row">
                 <div class="col" id="main">
-                    <article class="entry entry-single" style="height: 370px;">
+                    <article class="entry entry-single">
                         <div class="row">
                             <div class="col-lg-3 entries">
                                 <div class="comment-img"><img src="{{ advert.creator.client.avatar.url }}" alt=""></div>
@@ -48,13 +48,17 @@
                                 <span class="tag" style="font-size: 12px;">{{ section }}</span>
                             {% endfor %}
                         </div>
-                        {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
-                            <button class="w3-right button w3-right w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">Form team</button>
-                        {% endif %}
-                        {% if advert.creator == request.user %}
-                            <a class="button w3-right w3-section" style="margin-top:25px; margin-left: 5px;" href="{% url 'advert_delete' advert.id %}">Delete</a>
-                            <a class="button w3-right w3-section" style="margin-top:25px;" href="{% url 'advert_update' advert.id %}">Edit</a>
-                        {% endif %}
+                        <div class="row">
+                            <div class="col w3-right">
+                                {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
+                                    <button class="w3-right button w3-right w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">Form team</button>
+                                {% endif %}
+                                {% if advert.creator == request.user %}
+                                    <a class="button w3-right w3-section" style="margin-top:25px; margin-left: 5px; width: 100px; text-align: center" href="{% url 'advert_delete' advert.id %}">Delete</a>
+                                    <a class="button w3-right w3-section" style="margin-top:25px; width: 100px; text-align: center" href="{% url 'advert_update' advert.id %}">Edit</a>
+                                    {% endif %}
+                            </div>
+                        </div>
                     </article>
                     <article>
                         <div class="blog-comments">

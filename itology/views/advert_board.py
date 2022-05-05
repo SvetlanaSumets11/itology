@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
@@ -15,30 +14,19 @@ from itology.models import Advert, Comment, Role, Section, Team
 
 class HomeView(ListView):
     template_name = 'advert_board/home.html'
-    queryset = Advert.objects.filter(status=PROJECT_NOT_ACTIVE)
+    context_object_name = 'adverts'
     paginate_by = 2
+
+    def get_queryset(self):
+        section_title = self.request.GET.get('section')
+        if section_title:
+            return AdvertInterface.get_adverts_in_section(section_title)
+        return Advert.objects.filter(status=PROJECT_NOT_ACTIVE)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['adverts'] = Advert.objects.filter(status=PROJECT_NOT_ACTIVE)
         context['sections'] = Section.get_all()
         return context
-
-    def get(self, request, *args, **kwargs):
-        self.object_list = super().get_queryset()
-        context = self.get_context_data()
-
-        adverts = context['adverts']
-        section_title = request.GET.get('section')
-        if section_title:
-            adverts = AdvertInterface.get_adverts_in_section(section_title)
-
-        paginator = Paginator(adverts, self.paginate_by)
-        adverts = AdvertInterface.get_adverts_in_page(paginator, page=request.GET.get('page'))
-        context['adverts'] = adverts
-        context['section'] = section_title
-
-        return self.render_to_response(context=context)
 
 
 class AdvertView(DetailView):
