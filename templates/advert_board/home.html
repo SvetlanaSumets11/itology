@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
                     <ol>
-                        <li><a href="{% url 'users-home' %}">Home</a></li>
+                        <li><a href="{% url 'users-home' %}">Головна</a></li>
                         <li>{{ section }}</li>
                     </ol>
                 </div>
@@ -27,13 +27,13 @@
                                 <ul>
                                     <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{ advert.creator }}</li>
                                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i>{{ advert.created_at|date:"N j Y" }}</li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> 12 Comments</li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> 12 Коментарів</li>
                                 </ul>
                             </div>
                             <div class="entry-content">
                                 <p>{{ advert.description|truncatewords:20 }}</p>
                                 <div class="read-more">
-                                    <a href="{% url 'advert' advert.id %}">Read More</a>
+                                    <a href="{% url 'advert' advert.id %}">Читати більше</a>
                                 </div>
                             </div>
                             <hr>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar">
-                        <h3 class="sidebar-title">Categories</h3>
+                        <h3 class="sidebar-title">Категорії</h3>
                         <div class="sidebar-item categories">
                             <form method="GET">
                                 <ul>

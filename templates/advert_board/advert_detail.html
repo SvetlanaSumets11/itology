@@ -8,7 +8,7 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <ol>
-                    <li><a href="{% url 'users-home' %}">Home</a></li>
+                    <li><a href="{% url 'users-home' %}">Головна</a></li>
                     <li>{{ advert.title }}</li>
                 </ol>
             </div>
@@ -33,7 +33,7 @@
                                             <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{ advert.creator.username }}</li>
                                         {% endif %}
                                         <li class="d-flex align-items-center"><i class="bi bi-clock"></i> {{ advert.created_at|date:"N j Y" }} | {{ advert.updated_at|timesince }}</li>
-                                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>{{ comments.count }} Comments</li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>{{ comments.count }} Коментарів</li>
                                     </ul>
                                 </div>
                             </div>
@@ -51,11 +51,11 @@
                         <div class="row">
                             <div class="col w3-right">
                                 {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
-                                    <button class="w3-right button w3-right w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">Form team</button>
+                                    <button class="w3-right button w3-right w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">Сформувати команду</button>
                                 {% endif %}
                                 {% if advert.creator == request.user %}
-                                    <a class="button w3-right w3-section" style="margin-top:25px; margin-left: 5px; width: 100px; text-align: center" href="{% url 'advert_delete' advert.id %}">Delete</a>
-                                    <a class="button w3-right w3-section" style="margin-top:25px; width: 100px; text-align: center" href="{% url 'advert_update' advert.id %}">Edit</a>
+                                    <a class="button w3-right w3-section" style="margin-top:25px; margin-left: 5px; width: 120px; text-align: center" href="{% url 'advert_delete' advert.id %}">Видалити</a>
+                                    <a class="button w3-right w3-section" style="margin-top:25px; width: 120px; text-align: center" href="{% url 'advert_update' advert.id %}">Змінити</a>
                                     {% endif %}
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                     <article>
                         <div class="blog-comments">
                             <div class="reply-form" style="height: 310px;">
-                                <h4>Leave a Reply</h4>
+                                <h4>Залишити коментар</h4>
                                 <form method='POST'>
                                     {% csrf_token %}
                                     <div class="row">
@@ -72,12 +72,12 @@
                                                   name="content" rows="4">{{ comment_form.content.value|default:'' }}</textarea>
                                         </div>
                                     </div>
-                                    <button type="submit" class="button w3-right w3-section" style="width: 250px;"><i class="fa fa-paper-plane"></i> Post comment</button>
+                                    <button type="submit" class="button w3-right w3-section" style="width: 250px;"><i class="fa fa-paper-plane"></i> Прокоментувати</button>
                                 </form>
                             </div>
                             <br>
                             {% if comments %}
-                                <h4 class="comments-count">{{ comments.count }} Comments</h4>
+                                <h4 class="comments-count">{{ comments.count }} Коментарів</h4>
                                 {% for comment in comments %}
                                     <div class="comment">
                                     <div class="d-flex">
@@ -99,11 +99,11 @@
                         {% csrf_token %}
                         <br>
                         <p style="font-size: 16px;">
-                            You can add a role and the number of specialists for this role. This will form the project team.
+                            Ви можете додати роль та кількість експертів для ролі. Таким чином, ви сформуєте команду для створення проекту.
                         </p>
                         <br>
-                        <button style="margin-left: 35px;" class="button w3-section add-btn" type="button" >Add role</button>
-                        <button style="margin-left: 5px;" class="button w3-section" type="submit">Estimate</button>
+                        <button style="margin-left: 35px;" class="button w3-section add-btn" type="button" >Додати роль</button>
+                        <button style="margin-left: 5px;" class="button w3-section" type="submit">Підтвердити</button>
                         <div class="form-list"></div>
                     </form>
                     <div id="form-template" style="display: none">
