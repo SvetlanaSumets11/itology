@@ -28,10 +28,10 @@ function showEstimate() {
 const btn = document.getElementById('btn');
 
 btn.addEventListener('click', function handleClick() {
-    const initialText = 'Hide estimation';
+    const initialText = 'Скрити';
 
     if (btn.textContent.toLowerCase().includes(initialText.toLowerCase())) {
-        btn.textContent = 'Form team';
+        btn.textContent = 'Сформувати команду';
     } else {
         btn.textContent = initialText;
     }
