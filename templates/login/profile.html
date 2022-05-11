@@ -23,33 +23,33 @@
                             </div>
                         </div>
                         <div class="w3-container" style="margin-top: 14px;">
-                            <p><i class="fa fa-user fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Name:</label> {{ user.first_name}} {{user.last_name }}</p>
+                            <p><i class="fa fa-user fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Ім'я:</label> {{ user.first_name}} {{user.last_name }}</p>
                             <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356"> Email:</label> {{ user.email }}</p>
-                            <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">User type:</label> {{ user.client.user_type }}</p>
-                            <p><i class="fa fa-group fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Account type:</label> {{ user.client.account_type }}</p>
+                            <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Тип користувача:</label> {{ user.client.user_type }}</p>
+                            <p><i class="fa fa-group fa-fw w3-margin-right w3-large" style="color: #1e4356"></i><label style="color: #1e4356">Тип акаунта:</label> {{ user.client.account_type }}</p>
                             <hr>
-                            <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right" style="color: #1e4356"></i>Update data</b></p>
+                            <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right" style="color: #1e4356"></i>Оновити інформацію профіля</b></p>
                             <form method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-outline mb-4">
-                                    <label class="small" style="font-size: 14px;">Username:</label>
+                                    <label class="small" style="font-size: 14px;">Логін</label>
                                     {{ user_form.username }}
                                 </div>
                                 <div class="form-outline mb-4">
-                                    <label class="small" style="font-size: 14px;">Email:</label>
+                                    <label class="small" style="font-size: 14px;">Email</label>
                                     {{ user_form.email }}
                                 </div>
                                 <div class="form-outline mb-4">
-                                    <a style="font-size: 14px;" href="{% url 'password_change' %}">Change Password</a>
+                                    <a style="font-size: 14px;" href="{% url 'password_change' %}">Змінити пароль</a>
                                     <hr>
-                                    <label class="small" style="font-size: 14px;">Change Avatar:</label>
+                                    <label class="small" style="font-size: 14px;">Змінити фото профіля</label>
                                     <div style="font-size: 16px;">
                                         {{ profile_form.avatar }}
                                     </div>
                                 </div>
                                 <br>
-                                <button type="reset" class="col-md-3 w3-right button w3-section" style="margin-top:45px; margin-left: 5px;">Reset</button>
-                                <button type="submit" class="col-md-5 w3-right button w3-section" style="margin-top:45px;">Save changes</button>
+                                <button type="reset" class="col-md-4 w3-right button w3-section" style="margin-top:45px; margin-left: 5px;">Скинути</button>
+                                <button type="submit" class="col-md-5 w3-right button w3-section" style="margin-top:45px;">Зберегти зміни</button>
                             </form>
                             <br>
                         </div>
@@ -59,7 +59,7 @@
                 <div class="w3-twothird">
                     {% if request.user.client.user_type == 'Customer' %}
                         <div class="w3-container w3-card w3-white w3-margin-bottom">
-                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My adverts with no response</h2>
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Мої оголошення без відповіді</h2>
                             {% for advert in adverts %}
                                 {% if advert.status == 'Not active'%}
                                     <div class="w3-container">
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="w3-container w3-card w3-white w3-margin-bottom">
-                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>In development</h2>
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>У розробці</h2>
                             {% for advert in adverts %}
                                 {% if advert.status == 'In development' %}
                                     <div class="w3-container">
@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="w3-container w3-card w3-white">
-                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Completed projects</h2>
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Завершені проекти</h2>
                             {% for advert in adverts %}
                                 {% if advert.status == 'Developed' or advert.status == 'Confirmed' %}
                                     <div class="row">
@@ -122,7 +122,7 @@
                                                 <form method='POST' class='w3-row'>
                                                     {% csrf_token %}
                                                     <div class="w3-container">
-                                                        <button name="confirmation" value="{{ advert }}" type="submit" class="button w3-right w3-section" style="margin-top:45px; margin-left: 5px;">Confirm execution</button>
+                                                        <button name="confirmation" value="{{ advert }}" type="submit" class="button w3-right w3-section" style="margin-top:45px; margin-left: 5px;">Підтвердити виконання</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -133,7 +133,7 @@
                         </div>
                     {% else %}
                         <div class="w3-container w3-card w3-white">
-                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My projects in developing</h2>
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-hourglass-start fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Мої проекти в розробці</h2>
                             {% for project in projects %}
                                 {% if project.status == 'In development' %}
                                     <div class="row">
@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 entries">
-                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>Простір розробки</a>
                                         </div>
                                     </div>
                                 {% endif%}
@@ -157,7 +157,7 @@
                         </div>
                         <br>
                         <div class="w3-container w3-card w3-white">
-                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>My developed projects</h2>
+                            <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-check-square-o fa-fw w3-margin-right w3-xxlarge" style="color: #1e4356"></i>Мої виконані проекти</h2>
                             {% for project in projects %}
                                 {% if project.status == 'Developed' %}
                                     <div class="row">
@@ -173,7 +173,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 entries">
-                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>Простір розробки</a>
                                         </div>
                                     </div>
                                 {% elif project.status == 'Confirmed' %}
@@ -190,10 +190,10 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 entries">
-                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>My environment</a>
+                                            <a class="button w3-section" href="{{ project.get_environment }}"><i class="fa fa-clipboard fa-fw w3-margin-right" style="color: white"></i>Простір розробки</a>
                                             <form method="post">
                                                 {% csrf_token %}
-                                                <button name="download_certificate" value="{{ project }}" class="button w3-section add-btn" type="submit"><i class="fa fa-download fa-fw w3-margin-right" style="color: white"></i>Download certificates</button>
+                                                <button name="download_certificate" value="{{ project }}" class="button w3-section add-btn" type="submit"><i class="fa fa-download fa-fw w3-margin-right" style="color: white"></i>Скачати сертифікат</button>
                                             </form>
                                         </div>
                                     </div>

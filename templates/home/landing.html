@@ -49,10 +49,10 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="#about"><i class="fa fa-user"></i>ABOUT</a></li>
-                <li><a href="#portfolio"><i class="fa fa-th"></i>PORTFOLIO</a></li>
-                <li><a href="#contact"><i class="fa fa-envelope"></i>CONTACT</a></li>
-                <li><a href="{% url 'login' %}">SIGN IN</a></li>
+                <li><a href="#about"><i class="fa fa-user"></i> ПРО НАС</a></li>
+                <li><a href="#portfolio"><i class="fa fa-th"></i> МОЖЛИВОСТІ</a></li>
+                <li><a href="#contact"><i class="fa fa-envelope"></i> КОНТАКТИ</a></li>
+                <li><a href="{% url 'login' %}"> УВІЙТИ</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -65,9 +65,9 @@
     <div class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-item active">
             <div class="carousel-container">
-                <h2 class="animate__animated animate__fadeInDown">Welcome to <span>ITology</span></h2>
-                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-                <a href="{% url 'login' %}" class="btn-get-started animate__animated animate__fadeInUp">SIDN IN</a>
+                <h2 class="animate__animated animate__fadeInDown">Вас вітає <span>ITology</span></h2>
+                <p class="animate__animated animate__fadeInUp">Твій головний помічник в IT світі! Ми працюємо з багатьма новачками та професіоналами у сфері IT, приєднуйся! А якщо ти мрійник, то замов нашим спеціалістам свою ідею на втілення!</p>
+                <a href="{% url 'login' %}" class="btn-get-started animate__animated animate__fadeInUp">УВІЙТИ</a>
             </div>
         </div>
     </div>
@@ -75,143 +75,156 @@
 
 <main id="main">
     <!-- Container (About Section) -->
-    <div class="w3-container w3-content w3-padding-64" data-aos="fade-up" align="justify" id="about">
-        <h3 class="w3-center">ABOUT ME</h3>
-        <p class="w3-center"><em>I love photography</em></p>
-        <p>We have created a fictional "personal" website/blog, and our fictional character is a hobby photographer. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <div class="w3-row">
+    <div class="container w3-padding-64" data-aos="fade-up" align="justify" id="about">
+        <div class="section-title">
+            <span>ПРО НАС</span>
+            <h2>ПРО НАС</h2>
+            <p class="w3-center"><em>ITology - світ мрійників та втільників мрій</em></p>
+        </div>
+        <p>Наразі IT галузь - одна з провідних сфер життя кожної людини, ідеї мрійників втілюються під умілими руками спеціалістів, кожного дня народжуючи все нові й нові
+            продукти інформаційної сфери, що полегшують життя людей, економлять їх час та роблять щасливими. ITology - світ таких мрійників та втільників мрій! Провідний
+            асистент в IT послугах має за мету допомогти багатьом людям. Таким чином ITology дає змогу молодим спеціалістам в IT, студентам вишів, що спеціалізуються на
+            технічних галузях, доєднатися до дружньої команди розробників ITology, які на благодійній основі допомагають кожному. Будь-хто може подати оголошення з
+            описом проблеми, рішення якої потребує, ідею сайту, мобільного додатку, банера чи будь-чого з безмежного розмаїття світу IT та бути впевненим, що наші
+            початківці та вже досвідчені майстри втілять задумане в життя з душею та великим старанням.</p>
+        <br><br><br>
+        <div class="w3-row" data-aos="fade-up">
             <div class="w3-col m6 w3-center w3-padding-large">
-                <p><b><i class="fa fa-user w3-margin-right"></i>My Name</b></p><br>
-                <img src="/media/images/home.jpeg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+                <img src="/media/images/about/Customer.png" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
             </div>
-
-            <!-- Hide this text on small devices -->
             <div class="w3-col m6 w3-hide-small w3-padding-large">
-                <p>Welcome to my website. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <h3><p><i class="fa fa-asterisk" style="color: #68A4C4"></i> Для замовників: </p></h3>
+                <p>Зареєструйся як замовник, і ти отримаєшь можливість створити оголошення, описавши свою проблему чи ідею для втілення - це може бути будь-що:
+                    від "Допоможіть розібратися з Google Meet" до "Я хочу створити сайт, що буде платформою для здійснення діяльності волонтерської організації мого міста", -
+                    будь-що, що може виникнути у тебе в голові! Єксперти нашого сервісу відгукнуться на твоє повідомлення та почнуть розробку програми в команді чи самостійно.
+                    Ти отрумуватимеш повідомлення на пошту про кожну стадію розробки, зможешь підтвердити виконання роботи після отримання готового продукту, що допоможе нашим
+                    розробникам отримати відзнаки від ITology. У вашому профілі відображаються ваші проекти - ще не активні, в розробці та ті, що вже завершені.</p>
             </div>
         </div>
-        <p class="w3-large w3-center w3-padding-16">Im really good at:</p>
-        <p class="w3-wide"><i class="fa fa-camera"></i>Photography</p>
-        <div class="w3-light-grey">
-            <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:90%">90%</div>
+        <br><br><br>
+        <div class="w3-row" data-aos="fade-up">
+            <div class="w3-col m6 w3-hide-small w3-padding-large">
+                <h3><p><i class="fa fa-asterisk" style="color: #68A4C4"></i> Для експертів: </p></h3>
+                <p>Зареєструйся як експерт, і ти отримаєшь можливість відгукнутися на ідею, що хочешь втілити в життя, стоворити команду, обравши роль та кількість людей
+                    на даній позиції, зібрати експертів на пропоновані тобою ролі та в сформованній команді приступити до розробки. ITology хоче наблизити процес роботи над проектом
+                    до реальних умов розробки в IT компаніях, тож створює для всіх її членів дошку в сервісі Trello.
+                    Trello - зручний простір з багатьма можливостями для роботи в команді, надає можливість використовувати дошки з задачами по категоріям виконання,
+                    ITology створює для вас таку дошку з мітками, що відповідають назвам встановленних вами ролей, що суттево пришвидшує менеджмент проекту та робить процес
+                    розробки зручнішим та приємнішим. По завершенню розробки учасники команди підтверджують виконання роботи, передають готовий продукт замовнику, чекають
+                    його підтвердження та отримують сертифікат про участь в житті ITology, що буде приємним бонусом до CV. Кожен етап супроводжується поштовими повідомленнями,
+                    а всю інформацію - посилання на ваш робочий простір в Trello, розроблені проекти, сертифікати від ITology ти можеш знайти в своєму профілі. </p>
+            </div>
+            <div class="w3-col m6 w3-center w3-padding-large">
+                <img src="/media/images/about/Expert.png" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
+            </div>
         </div>
-        <p class="w3-wide"><i class="fa fa-laptop"></i>Web Design</p>
-        <div class="w3-light-grey">
-            <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:85%">85%</div>
-        </div>
-        <p class="w3-wide"><i class="fa fa-photo"></i>Photoshop</p>
-        <div class="w3-light-grey">
-            <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
+        <br><br><br>
+        <div class="row w3-content" data-aos="fade-up">
+            <h3 class="w3-center w3-padding-16">ITology - світ різноманітних ідей</h3>
+            <p class="w3-wide"><i class="fa fa-laptop" style="color: #1e4356"></i>Програмне забезпечення</p>
+            <div class="w3-light-grey">
+                <div class="w3-container w3-padding-small w3-center" style="width:90%; background-color: #528ca5; color: white">90%</div>
+            </div>
+            <p class="w3-wide" style="margin-top: 20px;"><i class="fa fa-photo" style="color: #1e4356;"></i>Дизайн</p>
+            <div class="w3-light-grey">
+                <div class="w3-container w3-padding-small w3-center" style="width:85%; background-color: #68A4C4; color: white">85%</div>
+            </div>
+            <p class="w3-wide" style="margin-top: 20px;"><i class="fa fa-power-off" style="color: #1e4356;"></i>Навчання технології</p>
+            <div class="w3-light-grey">
+                <div class="w3-container w3-padding-small w3-center" style="width:75%; background-color: #85b6cf; color: white">75%</div>
+            </div>
         </div>
     </div>
 
-    <div class="w3-row w3-center w3-dark-grey w3-padding-16" data-aos="fade-up">
+    <div class="w3-row w3-center w3-padding-16" style="background-color: #1e4356; color: white" data-aos="fade-up">
         <div class="w3-quarter w3-section">
             <span class="w3-xlarge">14+</span><br>
-            Partners
+            Напрямків
         </div>
         <div class="w3-quarter w3-section">
             <span class="w3-xlarge">55+</span><br>
-            Projects Done
+            Готових проектів
         </div>
         <div class="w3-quarter w3-section">
             <span class="w3-xlarge">89+</span><br>
-            Happy Clients
+            Експертів
         </div>
         <div class="w3-quarter w3-section">
             <span class="w3-xlarge">150+</span><br>
-            Meetings
+            Користувачів
         </div>
     </div>
 
     <!-- Second Parallax Image with Portfolio Text -->
     <div class="bgimg-2 w3-display-container w3-opacity-min">
         <div class="w3-display-middle">
-            <span class="w3-xxlarge w3-text-white w3-wide">PORTFOLIO</span>
+            <span class="w3-xxlarge w3-text-white w3-wide">МОЖЛИВОСТІ</span>
         </div>
     </div>
 
     <section class="features" id="portfolio">
-      <div class="container">
+        <div class="container">
+            <div class="section-title" style="margin-bottom: 30px;">
+                <span>МОЖЛИВОСТІ</span>
+                <h2>МОЖЛИВОСТІ</h2>
+                <p><em>Задоволені користувачі - головна мета сервісу ITology, ми піклуємось про ваш комфорт та удосконалюемо себе!</em></p>
+            </div>
 
-        <div class="section-title">
-          <h2>Features</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5">
+                    <img src="/media/images/features/features-1.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 pt-4">
+                    <h3 style="margin-bottom: 30px;">Можливість швидко розмістити свою ідею в кілька кліків миші без жодних знань в програмуванні, дизайні тощо</h3>
+                    <ul>
+                        <li><h4> - Зареєструйся як Замовник;</h4></li>
+                        <li><h4> - Заповни дані для створення оголошення;</h4></li>
+                        <li><h4> - Відстежуй статус оголошення в профілі.</h4></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5 order-1 order-md-2">
+                    <img src="/media/images/features/features-2.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 ">
+                    <h3 style="margin-bottom: 30px;">Можливість попрацювати в команді над реальним проектом</h3>
+                    <ul>
+                        <li><h4> - Зареєструйся як Експерт;</h4></li>
+                        <li><h4> - Знайди оголошення по душі для втілення;</h4></li>
+                        <li><h4> - Збери команду експертів та втіль ідею в життя;</h4></li>
+                        <li><h4> - Отримай свій сертифікат від ITology.</h4></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5">
+                    <img src="/media/images/features/features-3.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 pt-5">
+                    <h3 style="margin-bottom: 30px;">Можливість використовувати надійну зручну платформу для розробки</h3>
+                    <ul>
+                        <li><h4> - В доступі дошка, де ви можете розміщувати таски для розробки;</h4></li>
+                        <li><h4> - ITology свторює мітки у відповідності зі складом команди, щоб полегшити менеджмент проекту.</h4></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5 order-1 order-md-2">
+                    <img src="/media/images/features/features-4.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 pt-5 order-2 order-md-1">
+                    <h3 style="margin-bottom: 30px;">Можливість отримати сертифікат від ITology</h3>
+                    <ul>
+                        <li><h4> - У результаті розробленого проекту всі експерти отримують сертифікат;</h4></li>
+                        <li><h4> - Сертифікат стане гарним доповненням до вашого CV.</h4></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-md-5">
-            <img src="/media/images/features/features-1.svg" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7 pt-4">
-            <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
-            </p>
-            <ul>
-              <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-md-5 order-1 order-md-2">
-            <img src="/media/images/features/features-2.svg" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7 pt-5 order-2 order-md-1">
-            <h3>Corporis temporibus maiores provident</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
-            </p>
-            <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum
-            </p>
-          </div>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-md-5">
-            <img src="/media/images/features/features-3.svg" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7 pt-5">
-            <h3>Sunt consequatur ad ut est nulla consectetur reiciendis animi voluptas</h3>
-            <p>Cupiditate placeat cupiditate placeat est ipsam culpa. Delectus quia minima quod. Sunt saepe odit aut quia voluptatem hic voluptas dolor doloremque.</p>
-            <ul>
-              <li><i class="bi bi-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bi bi-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-              <li><i class="bi bi-check"></i> Facilis ut et voluptatem aperiam. Autem soluta ad fugiat.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-md-5 order-1 order-md-2">
-            <img src="/media/images/features/features-4.svg" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7 pt-5 order-2 order-md-1">
-            <h3>Quas et necessitatibus eaque impedit ipsum animi consequatur incidunt in</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
-            </p>
-            <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum
-            </p>
-          </div>
-        </div>
-
-      </div>
     </section>
 
     <!-- Modal for full size images on click-->
@@ -226,20 +239,29 @@
     <!-- Third Parallax Image with Portfolio Text -->
     <div class="bgimg-3 w3-display-container w3-opacity-min">
         <div class="w3-display-middle">
-            <span class="w3-xxlarge w3-text-white w3-wide">CONTACT</span>
+            <span class="w3-xxlarge w3-text-white w3-wide">КОНТАКТИ</span>
         </div>
     </div>
 
     <!-- Container (Contact Section) -->
     <div class="w3-content w3-container w3-padding-64" id="contact" data-aos="fade-up">
-        <h3 class="w3-center">WHERE I WORK</h3>
-        <p class="w3-center"><em>I'd love your feedback!</em></p>
+        <div class="section-title" style="margin-bottom: 30px;">
+            <span>КОНТАКТИ</span>
+            <h2>КОНТАКТИ</h2>
+            <p><em>Тримаємось на зв'язку, щоб разом втілювати ідеї в життя!</em></p>
+        </div>
 
-        <div class="w3-row w3-padding-32 w3-section">
-            <div class="w3-col m8 w3-panel">
+        <div class="w3-row w3-section">
+            <div class="w3-col m12 w3-panel">
                 <div class="w3-large w3-margin-bottom">
-                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +00 151515<br>
-                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@mail.com<br>
+                    <div class="row">
+                        <div class="col m-6">
+                            <i style="color: #1e4356;" class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +380977916521<br>
+                        </div>
+                        <div class="col m-6">
+                            <i style="color: #1e4356;" class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: svitlana.sumets@nure.ua<br>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -252,14 +274,14 @@
     <div class="footer-newsletter">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    <h4>Our Newsletter</h4>
-                    <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                <div class="col-lg-8">
+                    <h4>ITology - твій головний помічник в IT світі!</h4>
+                    <p>Ми працюємо з багатьма новачками та професіоналами у сфері IT, приєднуйся! А якщо ти мрійник, то замов нашим спеціалістам свою ідею на втілення!</p>
                 </div>
-                <div class="col-lg-6">
-                    <form action="" method="post">
-                        <input type="email" name="email"><input type="submit" value="Subscribe">
-                    </form>
+                <div class="col-lg-4">
+                    <i style="color: white;" class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +380977916521<br>
+                    <i style="color: white;" class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: svitlana.sumets@nure.ua<br>
+                    <i style="color: white;" class="fa fa-telegram fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Telegram: @Svetlana_Sumets<br>
                 </div>
             </div>
         </div>
@@ -268,61 +290,30 @@
     <div class="footer-top">
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                    </ul>
+                    <a href="#about"><h4>Про нас</h4></a>
+                    <p>Прочитай про шматочок світу ITology</p>
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-                    </ul>
+                    <a href="#portfolio"><h4>Можливості</h4></a>
+                    <p>Що ми є, з чим нас їдять</p>
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-contact">
-                    <h4>Contact Us</h4>
-                    <p>
-                        A108 Adam Street <br>
-                        New York, NY 535022<br>
-                        United States <br><br>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
-                    </p>
-
+                    <a href="#contact"><h4>Контакти</h4></a>
+                    <p>Залишаємося разом у будь-які часи</p>
                 </div>
-
                 <div class="col-lg-3 col-md-6 footer-info">
-                    <h3>About Moderna</h3>
-                    <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-                    <div class="social-links mt-3">
-                        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                    </div>
+                    <a href="{% url 'login' %}"><h4>Увійти</h4></a>
+                    <p>Доєднуйся до нашої дружної команди</p>
                 </div>
-
             </div>
         </div>
     </div>
     <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong><span>Moderna</span></strong>. All Rights Reserved
-        </div>
         <div class="credits">
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            Designed by Svetlana Sumets
         </div>
     </div>
 </footer><!-- End Footer -->
