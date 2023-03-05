@@ -10,10 +10,6 @@ on:
       - develop
       - master
 
-env:
-  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')
-
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +17,18 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.9]
+
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ci_db_test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -55,18 +63,12 @@ jobs:
           echo "SQL_PASSWORD=${{ secrets.SQL_PASSWORD }}" >> .env
           echo "SQL_HOST=${{ secrets.SQL_HOST }}" >> .env
           echo "SQL_PORT=${{ secrets.SQL_PORT }}" >> .env
-      - name: Set environment variables
+      - name: Build the images and start the containers
         run: |
-          echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
-          echo "DB_IMAGE=$(echo ${{env.DB_IMAGE}} )" >> $GITHUB_ENV
-      - name: Pull images
-        run: |
-          docker pull ${{ env.WEB_IMAGE }} || true
-          docker pull ${{ env.DB_IMAGE }} || true
-      - name: Build images
-        run: |
+          export GITHUB_WORKFLOW=True
+          export MODE="Test"
           docker-compose -f docker-compose.yml build
-      - name: Push images
-        run: |
-          docker push ${{ env.WEB_IMAGE }}
-          docker push ${{ env.DB_IMAGE }}
+          docker-compose -f docker-compose.yml up -d
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
