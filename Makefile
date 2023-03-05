@@ -34,6 +34,7 @@ logs-redis:
 
 prune:
 	docker system prune -a
+
 images:
 	docker images
 rmi:
