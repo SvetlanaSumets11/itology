@@ -48,7 +48,6 @@ jobs:
         pytest .
 
   docker:
-    name: Build Docker Images
     runs-on: ubuntu-latest
     steps:
     - name: Checkout master
