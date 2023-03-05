@@ -16,24 +16,24 @@ services:
       - '5432:5432'
     networks:
       - django-net
-#
-#  web:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    command: python ./manage.py runserver 0.0.0.0:8000
-#    volumes:
-#      - .:/usr/src/app/
-#    ports:
-#      - '8000:8000'
-#    env_file: .env
-#    depends_on:
-#      - db
-#    hostname: ${APP_NAME}
-#    container_name: ${APP_NAME}
-#    restart: always
-#    networks:
-#      - django-net
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python ./manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - '8000:8000'
+    env_file: .env
+    depends_on:
+      - db
+    hostname: ${APP_NAME}
+    container_name: ${APP_NAME}
+    restart: always
+    networks:
+      - django-net
 
 volumes:
     postgres_data:
