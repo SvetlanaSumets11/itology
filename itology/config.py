@@ -5,6 +5,8 @@ env = Env()
 env.read_env('.env')
 
 
+# ACCOUNT_TYPE = (('Individual', 'Персона'), ('Company', 'Компанія'))
+# USER_TYPE = (('Customer', 'Замовник'), ('Expert', 'Експерт'))
 ACCOUNT_TYPE = (('Individual', 'Individual'), ('Company', 'Company'))
 USER_TYPE = (('Customer', 'Customer'), ('Expert', 'Expert'))
 

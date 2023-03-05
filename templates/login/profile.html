@@ -5,8 +5,8 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <ol>
-                    <li><a href="{% url 'users-home' %}">Home</a></li>
-                    <li>Profile</li>
+                    <li><a href="{% url 'users-home' %}">Головна</a></li>
+                    <li>Профіль</li>
                 </ol>
             </div>
         </div>
@@ -71,7 +71,7 @@
                                             <span class="tag" style="font-size: 11px;">{{ section }}</span>
                                         {% endfor %}
                                         <br><br>
-                                        <p>{{ advert.description }}</p>
+                                        <p>{{ advert.description|truncatewords:20 }}</p>
                                         <hr>
                                     </div>
                                 {% endif %}
@@ -91,7 +91,7 @@
                                             <span class="tag" style="font-size: 11px;">{{ section }}</span>
                                         {% endfor %}
                                         <br><br>
-                                        <p>{{ advert.description }}</p>
+                                        <p>{{ advert.description|truncatewords:20 }}</p>
                                         <hr>
                                     </div>
                                 {% endif %}
@@ -113,7 +113,7 @@
                                                     <span class="tag" style="font-size: 11px;">{{ section }}</span>
                                                 {% endfor %}
                                                 <br><br>
-                                                <p>{{ advert.description }}</p>
+                                                <p>{{ advert.description|truncatewords:20 }}</p>
                                                 <hr>
                                             </div>
                                         </div>
@@ -144,7 +144,7 @@
                                                 </h3>
                                                 <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
                                                 <br><br>
-                                                <p>{{ project.description }}</p>
+                                                <p>{{ project.description|truncatewords:20 }}</p>
                                                 <hr>
                                             </div>
                                         </div>
@@ -168,7 +168,7 @@
                                                 </h3>
                                                 <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
                                                 <br><br>
-                                                <p>{{ project.description }}</p>
+                                                <p>{{ project.description|truncatewords:20 }}</p>
                                                 <hr>
                                             </div>
                                         </div>
@@ -185,7 +185,7 @@
                                                 </h3>
                                                 <h6 style="color: #68A4C4"><i class="fa fa-calendar fa-fw w3-margin-right" style="color: #68A4C4"></i>{{ project.created_at|date:"N j Y" }}</h6>
                                                 <br><br>
-                                                <p>{{ project.description }}</p>
+                                                <p>{{ project.description|truncatewords:20 }}</p>
                                                 <hr>
                                             </div>
                                         </div>

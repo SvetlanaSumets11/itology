@@ -131,7 +131,7 @@
                 </div>
                 {% if advert.classify == True and request.user.client.user_type == 'Customer' %}
                     <div class="col-lg-2 w3-card" style="margin-top: 80px;">
-                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Team</p>
+                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Команда</p>
                         <hr>
                         {% for team in teams %}
                             {% for member in team.members.values %}
@@ -144,7 +144,7 @@
                 {% endif %}
                 {% if advert.classify == True and request.user.client.user_type == 'Expert' %}
                     <div class="col-lg-2 w3-card" style="margin-top: 80px;">
-                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Team</p>
+                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Команда</p>
                         <hr>
                         {% for team in teams %}
                             {% for member in team.members.values %}
@@ -154,7 +154,7 @@
                             {% endfor %}
                         {% endfor %}
                         <form method='POST' class='w3-row'>
-                            <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Form team</p>
+                            <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Сформована команда</p>
                             <hr>
                             {% csrf_token %}
                             {% for team in teams %}
@@ -162,14 +162,14 @@
                                     {% for i in range %}
                                         <div class="w3-row container">
                                             <p style="font-size: 16px;"><i class="fa fa-user-o"></i>   {{ team.role }}</p>
-                                            <button name="occupied_role" value="{{ team.role }}" class="button w3-right w3-section" style="background-color: lightslategray" type="submit">Sign up for role</button>
+                                            <button name="occupied_role" value="{{ team.role }}" class="button w3-right w3-section" style="background-color: lightslategray" type="submit">Записатися</button>
                                         </div>
                                         <hr>
                                     {% endfor %}
                                 {% endwith %}
                             {% endfor %}
                         </form>
-                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Confirm completion</p>
+                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Підтвердження виконання</p>
                         <hr>
                         {% if advert.classify == True and request.user.client.user_type == 'Expert' and advert.status == 'In development' %}
                             <div class="w3-row w3-right">
