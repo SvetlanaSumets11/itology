@@ -1,0 +1,190 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head_title %}{{ advert.title }}{% endblock %}
+{% block content %}
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="{% url 'users-home' %}">Головна</a></li>
+                    <li>{{ advert.title }}</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col" id="main">
+                    <article class="entry entry-single">
+                        <div class="row">
+                            <div class="col-lg-3 entries">
+                                <div class="comment-img"><img src="{{ advert.creator.client.avatar.url }}" alt=""></div>
+                            </div>
+                            <div class="col-lg-9 entries">
+                                <h2 class="entry-title" style="color: #1e4356">{{ advert.title }}</h2>
+                                <div class="entry-meta">
+                                    <ul>
+                                        {% if request.user == advert.creator %}
+                                            <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a style="color: #68A4C4" href="{% url 'users-profile' %}">{{ advert.creator.username }}</a></li>
+                                        {% else %}
+                                            <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{ advert.creator.username }}</li>
+                                        {% endif %}
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> {{ advert.created_at|date:"N j Y" }} | {{ advert.updated_at|timesince }}</li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>{{ comments.count }} Коментарів</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="entry-content">
+                            <p>{{ advert.description }}</p>
+                        </div>
+
+                        <div class="entry-footer">
+                            {% for section in advert.sections.all %}
+                                <span class="tag" style="font-size: 12px;">{{ section }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col w3-right">
+                                {% if advert.classify == False and request.user.client.user_type == 'Expert' %}
+                                    <button class="w3-right button w3-right w3-section" id="btn" onclick="showEstimate()" style="margin-top:25px; margin-left: 5px;">Сформувати команду</button>
+                                {% endif %}
+                                {% if advert.creator == request.user %}
+                                    <a class="button w3-right w3-section" style="margin-top:25px; margin-left: 5px; width: 120px; text-align: center" href="{% url 'advert_delete' advert.id %}">Видалити</a>
+                                    <a class="button w3-right w3-section" style="margin-top:25px; width: 120px; text-align: center" href="{% url 'advert_update' advert.id %}">Змінити</a>
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </article>
+                    <article>
+                        <div class="blog-comments">
+                            <div class="reply-form" style="height: 310px;">
+                                <h4>Залишити коментар</h4>
+                                <form method='POST'>
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col form-group">
+                                        <textarea class="form-control {% if comment_form.content.errors %}is-invalid{% endif %}" id="id_content"
+                                                  name="content" rows="4">{{ comment_form.content.value|default:'' }}</textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="button w3-right w3-section" style="width: 250px;"><i class="fa fa-paper-plane"></i> Прокоментувати</button>
+                                </form>
+                            </div>
+                            <br>
+                            {% if comments %}
+                                <h4 class="comments-count">{{ comments.count }} Коментарів</h4>
+                                {% for comment in comments %}
+                                    <div class="comment">
+                                    <div class="d-flex">
+                                        <div class="comment-img"><img src="{{ comment.author.client.avatar.url }}" alt=""></div>
+                                        <div>
+                                            <h5>{{ comment.author.username }}</h5>
+                                            <time>{{ comment.created_at }}</time>
+                                            <p>{{ comment.content }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-lg-3 w3-card" id="estimate" style="display:none; margin-top: 80px;">
+                    <form method='POST' class='w3-row'>
+                        {% csrf_token %}
+                        <br>
+                        <p style="font-size: 16px;">
+                            Ви можете додати роль та кількість експертів для ролі. Таким чином, ви сформуєте команду для створення проекту.
+                        </p>
+                        <br>
+                        <button style="margin-left: 35px;" class="button w3-section add-btn" type="button" >Додати роль</button>
+                        <button style="margin-left: 5px;" class="button w3-section" type="submit">Підтвердити</button>
+                        <div class="form-list"></div>
+                    </form>
+                    <div id="form-template" style="display: none">
+                        <div class="form-row" style="padding-top: 50px;">
+                            <div class="w3-col m10">
+                                <select class="form-control" name="role" id="id_role">
+                                    <option> Role </option>
+                                    {% for role in roles %}
+                                        <option value="{{ role }}">{{ role }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="form-control" name="amount" id="id_amount" style="margin-top: 10px;">
+                                    <option> Amount </option>
+                                    <option value="1">{{ '1' }}</option>
+                                    <option value="2">{{ '2' }}</option>
+                                    <option value="3">{{ '3' }}</option>
+                                    <option value="4">{{ '4' }}</option>
+                                    <option value="5">{{ '5' }}</option>
+                                </select>
+                            </div>
+                            <button class="w3-col m1 w3-right remove-btn" style="margin-top: 25px;">&times;</button>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+                {% if advert.classify == True and request.user.client.user_type == 'Customer' %}
+                    <div class="col-lg-2 w3-card" style="margin-top: 80px;">
+                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Команда</p>
+                        <hr>
+                        {% for team in teams %}
+                            {% for member in team.members.values %}
+                                <div class="w3-row container">
+                                    <p style="font-size: 16px;"><i class="fa fa-user-o"></i>    {{ team.role }}: {{ member.username }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if advert.classify == True and request.user.client.user_type == 'Expert' %}
+                    <div class="col-lg-2 w3-card" style="margin-top: 80px;">
+                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Команда</p>
+                        <hr>
+                        {% for team in teams %}
+                            {% for member in team.members.values %}
+                                <div class="w3-row container">
+                                    <p style="font-size: 16px;"><i class="fa fa-user-o"></i>    {{ team.role }}: {{ member.username }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <form method='POST' class='w3-row'>
+                            <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Сформована команда</p>
+                            <hr>
+                            {% csrf_token %}
+                            {% for team in teams %}
+                                {% with ''|center:team.amount as range %}
+                                    {% for i in range %}
+                                        <div class="w3-row container">
+                                            <p style="font-size: 16px;"><i class="fa fa-user-o"></i>   {{ team.role }}</p>
+                                            <button name="occupied_role" value="{{ team.role }}" class="button w3-right w3-section" style="background-color: lightslategray" type="submit">Записатися</button>
+                                        </div>
+                                        <hr>
+                                    {% endfor %}
+                                {% endwith %}
+                            {% endfor %}
+                        </form>
+                        <p style="font-size: 18px; text-align: center; margin-top: 20px;"><i class="fa fa-users"></i>   Підтвердження виконання</p>
+                        <hr>
+                        {% if advert.classify == True and request.user.client.user_type == 'Expert' and advert.status == 'In development' %}
+                            <div class="w3-row w3-right">
+                                <form method='POST' class='w3-row'>
+                                    {% csrf_token %}
+                                    {% for role in my_roles %}
+                                        <button name="completed_role" value="{{ role }}" class="button w3-section" style="width: 200px;" type="submit">{{ role }}</button>
+                                    {% endfor %}
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <script src="{% static 'js/advert_detail.js' %}"></script>
+{% endblock content %}

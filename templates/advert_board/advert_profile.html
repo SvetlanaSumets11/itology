@@ -1,0 +1,65 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block content %}
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="{% url 'users-home' %}">Головна</a></li>
+                    <li>{% if update %}Оновити оголошення{% else %}Створити оголошення{% endif %}</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container" data-aos="fade-up">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-md-8 col-lg-7 col-xl-6">
+                    <img src="{% static "media/advert.jpg" %}" class="img-fluid">
+                </div>
+                <div class="col-md-7 col-lg-5 col-xl-6">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-outline mb-4">
+                            <label class="small"> Назва </label>
+                            <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}" id="id_title"
+                                   name="title" value='{{ form.title.value|default:"" }}'>
+                            {% if form.title.errors %}
+                                <div class="invalid-feedback">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label class="small"> Описання </label>
+                            <textarea type="text" class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="id_description"
+                                      name="description" cols="40" rows="10">{{ form.description.value|default:"" }}</textarea>
+                            {% if form.description.errors %}
+                                <div class="invalid-feedback">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label class="small" style="font-size: 14px;">Категорії</label><br>
+                            <select class="w3-section form-control" name="sections" id="id_sections" multiple>
+                                {% for section in sections %}
+                                    {% if section.parent %}
+                                        <option value="{{ section.id }}">{{ section }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+
+                            {% if form.sections.errors %}
+                                <div class="invalid-feedback">{{ form.sections.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="row outer-div">
+                            <button type="submit" class="col-md-8 button w3-section" style="margin-top:45px">
+                                {% if update %}Оновити оголошення{% else %}Створити оголошення{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

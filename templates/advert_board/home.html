@@ -1,0 +1,101 @@
+{% extends 'home/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+    {% if section %}
+        <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <ol>
+                        <li><a href="{% url 'users-home' %}">Головна</a></li>
+                        <li>{{ section }}</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-8 entries">
+                    {% for advert in adverts %}
+                        <article class="entry">
+                            <h2 class="entry-title">
+                                <a href="{% url 'advert' advert.id %}">{{ advert.title }}</a>
+                            </h2>
+                            <div class="entry-meta">
+                                <ul>
+                                    <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{ advert.creator }}</li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i>{{ advert.created_at|date:"N j Y" }}</li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> 12 Коментарів</li>
+                                </ul>
+                            </div>
+                            <div class="entry-content">
+                                <p>{{ advert.description|truncatewords:20 }}</p>
+                                <div class="read-more">
+                                    <a href="{% url 'advert' advert.id %}">Читати більше</a>
+                                </div>
+                            </div>
+                            <hr>
+                            {% for section in advert.sections.all %}
+                                <span class="tag" style="font-size: 12px;">{{ section }}</span>
+                            {% endfor %}
+                        </article>
+                    {% endfor %}
+                    <nav class="justify-content-center outer-div" style="margin-left:250px;">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link w3-button w3-black w3-margin-bottom" href="?{% param_replace page=page_obj.previous_page_number %}">«</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item w3-disabled">
+                                    <a class="page-link w3-button w3-black w3-margin-bottom" href="#">«</a>
+                                </li>
+                            {% endif %}
+
+                            {% for i in page_obj.paginator.page_range %}
+                                <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                                    <a class="page-link w3-button w3-margin-bottom w3-black w3-opacity w3-hover-opacity-off" style="margin-left: 5px;" href="?{% param_replace page=i %}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link w3-button w3-black w3-margin-bottom" style="margin-left: 5px;" href="?{% param_replace page=page_obj.next_page_number %}">»</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item w3-disabled">
+                                    <a class="page-link w3-button w3-black w3-margin-bottom" style="margin-left: 5px;" href="#">»</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar">
+                        <h3 class="sidebar-title">Категорії</h3>
+                        <div class="sidebar-item categories">
+                            <form method="GET">
+                                <ul>
+                                    {% for section in sections %}
+                                        {% if section.children.exists %}
+                                            <li><a href="?section={{ section.title }}">
+                                                {{ section.title }}<span>({{ section.get_adverts_in_parent }})</span>
+                                            </a></li>
+                                            {% for subsection in section.children.all %}
+                                                <li style="margin-left: 15px;"><a href="?section={{ subsection.title }}">
+                                                    {{ subsection.title }} <span>({{ subsection.get_adverts_in_children}})</span>
+                                                </a></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

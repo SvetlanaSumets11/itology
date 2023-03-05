@@ -1,0 +1,116 @@
+body,h1,h2,h3,h4,h5,h6,label,a {font-family: "Lato", sans-serif;}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+p {font-size: 16px;}
+label {font-size: 14px;}
+.bg-2 {
+    background-color: #FAFCFC; /* Light-grey */
+    color: #555555;
+}
+.bg-3 {
+    background-color: #ffffff; /* White */
+    color: #555555;
+}
+.bg-5 {
+    background-color: #79a3d2; /* Blue */
+    color: #fff;
+}
+.container-fluid {
+    padding-top: 1px;
+    padding-bottom: 70px;
+}
+.tag {
+    margin: 0 2px;
+    padding: 4px 10px;
+    color: #fff;
+    background: #68A4C4;
+    font-size: 60%;
+    font-family: sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.outer-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid #1e4356;
+    background-color: #68A4C4;
+    border-radius: 4px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    font-size: 15px;
+    color: white;
+    z-index: 1;
+}
+
+.button:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #1e4356;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button:hover {
+    color: #ffffff;
+    border: 1px solid #39bda7;
+}
+
+.button:hover:before {
+    top: -35%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.button:hover:after {
+    top: -45%;
+    background-color: #1e4356;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.bgimg-1 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bgimg-1 {
+    background-image: url("/media/images/landing/landing3.jpg");
+    min-height: 300px;
+}
+@media only screen and (max-device-width: 1600px) {
+    .bgimg-1 {
+        background-attachment: scroll;
+        min-height: 400px;
+    }
+}

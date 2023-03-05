@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>IT-ASSISTANT</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/glightbox/css/glightbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <div class="logo">
+            <div class="row">
+                <div class="col">
+                    <img src="/media/images/logo.png" alt="">
+                </div>
+                <div class="col">
+                    <h1 class="text-light"><a href=""><span>IT_ASSISTANT</span></a></h1>
+                </div>
+            </div>
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="#about"><i class="fa fa-user"></i> ПРО НАС</a></li>
+                <li><a href="#portfolio"><i class="fa fa-th"></i> МОЖЛИВОСТІ</a></li>
+                <li><a href="#contact"><i class="fa fa-envelope"></i> КОНТАКТИ</a></li>
+                <li><a href="{% url 'login' %}"> УВІЙТИ</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex justify-cntent-center align-items-center">
+    <div class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-item active">
+            <div class="carousel-container">
+                <h2 class="animate__animated animate__fadeInDown">Вас вітає <span>IT_Assistant</span></h2>
+                <p class="animate__animated animate__fadeInUp">Твій головний помічник в IT світі! Ми працюємо з багатьма новачками та професіоналами у сфері IT, приєднуйся! А якщо ти мрійник, то замов нашим спеціалістам свою ідею на втілення!</p>
+                <a href="{% url 'login' %}" class="btn-get-started animate__animated animate__fadeInUp">УВІЙТИ</a>
+            </div>
+        </div>
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+    <!-- Container (About Section) -->
+    <div class="container w3-padding-64" data-aos="fade-up" align="justify" id="about">
+        <div class="section-title">
+            <span>ПРО НАС</span>
+            <h2>ПРО НАС</h2>
+            <p class="w3-center"><em>IT-Assistant  - світ мрійників та втільників мрій</em></p>
+        </div>
+        <p>Наразі IT галузь - одна з провідних сфер життя кожної людини, ідеї мрійників втілюються під умілими руками спеціалістів, кожного дня народжуючи все нові й нові
+            продукти інформаційної сфери, що полегшують життя людей, економлять їх час та роблять щасливими. IT-Assistant  - світ таких мрійників та втільників мрій! Провідний
+            асистент в IT послугах має за мету допомогти багатьом людям. Таким чином IT-Assistant  дає змогу молодим спеціалістам в IT, студентам вишів, що спеціалізуються на
+            технічних галузях, доєднатися до дружньої команди розробників IT-Assistant , які на благодійній основі допомагають кожному. Будь-хто може подати оголошення з
+            описом проблеми, рішення якої потребує, ідею сайту, мобільного додатку, банера чи будь-чого з безмежного розмаїття світу IT та бути впевненим, що наші
+            початківці та вже досвідчені майстри втілять задумане в життя з душею та великим старанням.</p>
+        <br><br><br>
+        <div class="w3-row" data-aos="fade-up">
+            <div class="w3-col m6 w3-center w3-padding-large">
+                <img src="/media/images/about/Customer.png" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
+            </div>
+            <div class="w3-col m6 w3-hide-small w3-padding-large">
+                <h3><p><i class="fa fa-asterisk" style="color: #68A4C4"></i> Для замовників: </p></h3>
+                <p>Зареєструйся як замовник, і ти отримаєшь можливість створити оголошення, описавши свою проблему чи ідею для втілення - це може бути будь-що:
+                    від "Допоможіть розібратися з Google Meet" до "Я хочу створити сайт, що буде платформою для здійснення діяльності волонтерської організації мого міста", -
+                    будь-що, що може виникнути у тебе в голові! Єксперти нашого сервісу відгукнуться на твоє повідомлення та почнуть розробку програми в команді чи самостійно.
+                    Ти отрумуватимеш повідомлення на пошту про кожну стадію розробки, зможешь підтвердити виконання роботи після отримання готового продукту, що допоможе нашим
+                    розробникам отримати відзнаки від IT-Assistant . У вашому профілі відображаються ваші проекти - ще не активні, в розробці та ті, що вже завершені.</p>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="w3-row" data-aos="fade-up">
+            <div class="w3-col m6 w3-hide-small w3-padding-large">
+                <h3><p><i class="fa fa-asterisk" style="color: #68A4C4"></i> Для експертів: </p></h3>
+                <p>Зареєструйся як експерт, і ти отримаєшь можливість відгукнутися на ідею, що хочешь втілити в життя, стоворити команду, обравши роль та кількість людей
+                    на даній позиції, зібрати експертів на пропоновані тобою ролі та в сформованній команді приступити до розробки. IT-Assistant  хоче наблизити процес роботи над проектом
+                    до реальних умов розробки в IT компаніях, тож створює для всіх її членів дошку в сервісі Trello.
+                    Trello - зручний простір з багатьма можливостями для роботи в команді, надає можливість використовувати дошки з задачами по категоріям виконання,
+                    IT-Assistant  створює для вас таку дошку з мітками, що відповідають назвам встановленних вами ролей, що суттево пришвидшує менеджмент проекту та робить процес
+                    розробки зручнішим та приємнішим. По завершенню розробки учасники команди підтверджують виконання роботи, передають готовий продукт замовнику, чекають
+                    його підтвердження та отримують сертифікат про участь в житті IT-Assistant , що буде приємним бонусом до CV. Кожен етап супроводжується поштовими повідомленнями,
+                    а всю інформацію - посилання на ваш робочий простір в Trello, розроблені проекти, сертифікати від IT-Assistant  ти можеш знайти в своєму профілі. </p>
+            </div>
+            <div class="w3-col m6 w3-center w3-padding-large">
+                <img src="/media/images/about/Expert.png" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row w3-content" data-aos="fade-up">
+            <h3 class="w3-center w3-padding-16">IT-Assistant  - світ різноманітних ідей</h3>
+            <p class="w3-wide"><i class="fa fa-laptop" style="color: #1e4356"></i>Програмне забезпечення</p>
+            <div class="w3-light-grey">
+                <div class="w3-container w3-padding-small w3-center" style="width:90%; background-color: #528ca5; color: white">90%</div>
+            </div>
+            <p class="w3-wide" style="margin-top: 20px;"><i class="fa fa-photo" style="color: #1e4356;"></i>Дизайн</p>
+            <div class="w3-light-grey">
+                <div class="w3-container w3-padding-small w3-center" style="width:85%; background-color: #68A4C4; color: white">85%</div>
+            </div>
+            <p class="w3-wide" style="margin-top: 20px;"><i class="fa fa-power-off" style="color: #1e4356;"></i>Навчання технології</p>
+            <div class="w3-light-grey">
+                <div class="w3-container w3-padding-small w3-center" style="width:75%; background-color: #85b6cf; color: white">75%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-row w3-center w3-padding-16" style="background-color: #1e4356; color: white" data-aos="fade-up">
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">14+</span><br>
+            Напрямків
+        </div>
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">55+</span><br>
+            Готових проектів
+        </div>
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">89+</span><br>
+            Експертів
+        </div>
+        <div class="w3-quarter w3-section">
+            <span class="w3-xlarge">150+</span><br>
+            Користувачів
+        </div>
+    </div>
+
+    <!-- Second Parallax Image with Portfolio Text -->
+    <div class="bgimg-2 w3-display-container w3-opacity-min">
+        <div class="w3-display-middle">
+            <span class="w3-xxlarge w3-text-white w3-wide">МОЖЛИВОСТІ</span>
+        </div>
+    </div>
+
+    <section class="features" id="portfolio">
+        <div class="container">
+            <div class="section-title" style="margin-bottom: 30px;">
+                <span>МОЖЛИВОСТІ</span>
+                <h2>МОЖЛИВОСТІ</h2>
+                <p><em>Задоволені користувачі - головна мета сервісу IT-Assistant , ми піклуємось про ваш комфорт та удосконалюемо себе!</em></p>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5">
+                    <img src="/media/images/features/features-1.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 pt-4">
+                    <h3 style="margin-bottom: 30px;">Можливість швидко розмістити свою ідею в кілька кліків миші без жодних знань в програмуванні, дизайні тощо</h3>
+                    <ul>
+                        <li><h4> - Зареєструйся як Замовник;</h4></li>
+                        <li><h4> - Заповни дані для створення оголошення;</h4></li>
+                        <li><h4> - Відстежуй статус оголошення в профілі.</h4></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5 order-1 order-md-2">
+                    <img src="/media/images/features/features-2.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 ">
+                    <h3 style="margin-bottom: 30px;">Можливість попрацювати в команді над реальним проектом</h3>
+                    <ul>
+                        <li><h4> - Зареєструйся як Експерт;</h4></li>
+                        <li><h4> - Знайди оголошення по душі для втілення;</h4></li>
+                        <li><h4> - Збери команду експертів та втіль ідею в життя;</h4></li>
+                        <li><h4> - Отримай свій сертифікат від IT-Assistant .</h4></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5">
+                    <img src="/media/images/features/features-3.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 pt-5">
+                    <h3 style="margin-bottom: 30px;">Можливість використовувати надійну зручну платформу для розробки</h3>
+                    <ul>
+                        <li><h4> - В доступі дошка, де ви можете розміщувати таски для розробки;</h4></li>
+                        <li><h4> - IT-Assistant  свторює мітки у відповідності зі складом команди, щоб полегшити менеджмент проекту.</h4></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row" data-aos="fade-up">
+                <div class="col-md-5 order-1 order-md-2">
+                    <img src="/media/images/features/features-4.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-7 pt-5 order-2 order-md-1">
+                    <h3 style="margin-bottom: 30px;">Можливість отримати сертифікат від IT-Assistant </h3>
+                    <ul>
+                        <li><h4> - У результаті розробленого проекту всі експерти отримують сертифікат;</h4></li>
+                        <li><h4> - Сертифікат стане гарним доповненням до вашого CV.</h4></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for full size images on click-->
+    <div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'" data-aos="fade-up">
+        <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+        <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+            <img id="img01" class="w3-image">
+            <p id="caption" class="w3-opacity w3-large"></p>
+        </div>
+    </div>
+
+    <!-- Third Parallax Image with Portfolio Text -->
+    <div class="bgimg-3 w3-display-container w3-opacity-min">
+        <div class="w3-display-middle">
+            <span class="w3-xxlarge w3-text-white w3-wide">КОНТАКТИ</span>
+        </div>
+    </div>
+
+    <!-- Container (Contact Section) -->
+    <div class="w3-content w3-container w3-padding-64" id="contact" data-aos="fade-up">
+        <div class="section-title" style="margin-bottom: 30px;">
+            <span>КОНТАКТИ</span>
+            <h2>КОНТАКТИ</h2>
+            <p><em>Тримаємось на зв'язку, щоб разом втілювати ідеї в життя!</em></p>
+        </div>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col m12 w3-panel">
+                <div class="w3-large w3-margin-bottom">
+                    <div class="row">
+                        <div class="col m-6">
+                            <i style="color: #1e4356;" class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +380977916521<br>
+                        </div>
+                        <div class="col m-6">
+                            <i style="color: #1e4356;" class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: svitlana.sumets@nure.ua<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+    <div class="footer-newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h4>IT-Assistant - твій головний помічник в IT світі!</h4>
+                    <p>Ми працюємо з багатьма новачками та професіоналами у сфері IT, приєднуйся! А якщо ти мрійник, то замов нашим спеціалістам свою ідею на втілення!</p>
+                </div>
+                <div class="col-lg-4">
+                    <i style="color: white;" class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +380977916521<br>
+                    <i style="color: white;" class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: svitlana.sumets@nure.ua<br>
+                    <i style="color: white;" class="fa fa-telegram fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Telegram: @Svetlana_Sumets<br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <a href="#about"><h4>Про нас</h4></a>
+                    <p>Прочитай про шматочок світу IT-Assistant </p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <a href="#portfolio"><h4>Можливості</h4></a>
+                    <p>Що ми є, з чим нас їдять</p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-contact">
+                    <a href="#contact"><h4>Контакти</h4></a>
+                    <p>Залишаємося разом у будь-які часи</p>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-info">
+                    <a href="{% url 'login' %}"><h4>Увійти</h4></a>
+                    <p>Доєднуйся до нашої дружної команди</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="credits">
+             Спроектовано Сумець Світланою
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fa fa-arrow-up"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'js/purecounter/purecounter.js' %}"></script>
+<script src="{% static 'js/aos/aos.js' %}"></script>
+<script src="{% static 'js/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'js/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/waypoints/noframework.waypoints.js' %}"></script>
+<script src="{% static 'js/php-email-form/validate.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<script src="{% static 'js/landing.js' %}"></script>
+</body>
+</html>
