@@ -2,7 +2,7 @@ FROM python:3.9
 
 WORKDIR /usr/src/app/
 
-COPY pyproject.toml poetry.lock /usr/src/app/
+COPY pyproject.toml /usr/src/app/
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
